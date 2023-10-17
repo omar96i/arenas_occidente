@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandLogo(asset('icono.png'))
+
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -40,6 +42,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+            ])
+            ->plugins([
+                FilamentLanguageSwitchPlugin::make()
             ])
             ->middleware([
                 EncryptCookies::class,

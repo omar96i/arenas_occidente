@@ -20,11 +20,11 @@ class EntityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationLabel = 'Entidades';
+    protected static ?string $navigationLabel = 'Contratos';
 
-    protected static ?string $slug = 'entidades';
+    protected static ?string $slug = 'contratos';
 
-    protected static ?string $pluralModelLabel = 'entidades';
+    protected static ?string $pluralModelLabel = 'contratos';
 
     public static function form(Form $form): Form
     {

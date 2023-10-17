@@ -21,11 +21,11 @@ class EntitySegmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationLabel = 'Segmentos';
+    protected static ?string $navigationLabel = 'Turnos';
 
-    protected static ?string $slug = 'segmentos';
+    protected static ?string $slug = 'turnos';
 
-    protected static ?string $pluralModelLabel = 'segmentos';
+    protected static ?string $pluralModelLabel = 'turnos';
 
     public static function form(Form $form): Form
     {
