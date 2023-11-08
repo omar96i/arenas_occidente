@@ -29,7 +29,7 @@ class EntityShift extends Model
      */
     public function segment(): BelongsTo
     {
-        return $this->belongsTo(EntitySegment::class);
+        return $this->belongsTo(EntitySegment::class, 'entity_segment_id');
     }
 
     /**

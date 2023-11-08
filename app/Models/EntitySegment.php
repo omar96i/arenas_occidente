@@ -21,6 +21,7 @@ class EntitySegment extends Model
         'entity_id',
         'name',
         'sub_title',
+        'time_limit',
     ];
 
     /**
@@ -30,7 +31,7 @@ class EntitySegment extends Model
      */
     public function entity(): BelongsTo
     {
-        return $this->belongsTo(Entity::class);
+        return $this->belongsTo(Entity::class, 'entity_id');
     }
 
     /**
@@ -40,6 +41,6 @@ class EntitySegment extends Model
      */
     public function shifts(): HasMany
     {
-        return $this->hasMany(EntityShift::class);
+        return $this->hasMany(EntityShift::class, 'entity_segment_id');
     }
 }

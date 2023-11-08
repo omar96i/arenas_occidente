@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Origin: *');
+
+Route::get('/test/{record}', function () {
+    return "hola";
+})->name('test');

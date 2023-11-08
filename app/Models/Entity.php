@@ -37,6 +37,6 @@ class Entity extends Model
      */
     public function segments(): HasMany
     {
-        return $this->hasMany(EntitySegment::class);
+        return $this->hasMany(EntitySegment::class, 'entity_id');
     }
 }

@@ -24,6 +24,11 @@ class EntityResource extends Resource
 
     protected static ?string $slug = 'contratos';
 
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationGroup = 'Administracion de turnos y contratos';
+
+
     protected static ?string $pluralModelLabel = 'contratos';
 
     public static function form(Form $form): Form

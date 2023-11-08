@@ -25,21 +25,27 @@ class EntitySegmentResource extends Resource
 
     protected static ?string $slug = 'turnos';
 
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationGroup = 'Administracion de turnos y contratos';
+
     protected static ?string $pluralModelLabel = 'turnos';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('entity_id')
+                Forms\Components\Select::make('entity_id')->label('Seleccionar un contrato')
                     ->relationship('entity', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('name')->label('Nombre')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('sub_title')
+                Forms\Components\TextInput::make('sub_title')->label('Sub titulo')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\TextInput::make('time_limit')->label('Limite de horas')
+                    ->required()->numeric(),
             ]);
     }
 
@@ -47,18 +53,18 @@ class EntitySegmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('entity.name')
+                Tables\Columns\TextColumn::make('entity.name')->label('Contrato')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')->label('Nombre del turno')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sub_title')
+                Tables\Columns\TextColumn::make('sub_title')->label('Sub titulo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->label('Fecha de actualizaón')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -12,13 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('entity_segments', function (Blueprint $table) {
+        Schema::create('equipment_option_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained();
             $table->string('name');
-            $table->string('sub_title');
-            $table->integer('time_limit');
-            $table->softDeletes();
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('entity_segments');
+        Schema::dropIfExists('equipment_option_categories');
     }
 };
