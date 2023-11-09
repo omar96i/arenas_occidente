@@ -4,9 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\ContractsRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\PersonalInformationRelationManager;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,21 +38,40 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
-                ->schema([
-                    Forms\Components\TextInput::make('name')->label('Nombre')
-                        ->required()
-                        ->maxLength(191),
-                    Forms\Components\TextInput::make('email')->label('Email')
-                        ->email()
-                        ->required()
-                        ->maxLength(191),
-                    Forms\Components\TextInput::make('password')->label('Contraseña')
-                        ->password()
-                        ->required()
-                        ->maxLength(191),
-                ]),
-            ]);
+                Tabs::make('Label')
+                    ->tabs([
+                        Tab::make('Usuario')
+                            ->schema([
+                                TextInput::make('name')->label('Nombre de Usuario')
+                                    ->required()
+                                    ->maxLength(191),
+                                TextInput::make('email')->label('Email')
+                                    ->email()
+                                    ->required()
+                                    ->maxLength(191),
+                                TextInput::make('password')->label('Contraseña')
+                                    ->password()
+                                    ->required()
+                                    ->maxLength(191),
+                            ])->columns(2),
+                        Tabs\Tab::make('Datos Personales')
+                            ->schema([
+                                TextInput::make('full_name')
+                                    ->label('Nombre Completo')
+                                     ->maxLength(191),
+                                TextInput::make('last_name')
+                                    ->label('Apellidos')
+                                    ->email()
+                                    ->maxLength(191),
+                                TextInput::make('document')
+                                    ->label('Documento')
+                                    ->maxLength(191),
+                                TextInput::make('address')
+                                    ->label('Dirección')
+                                    ->maxLength(191),
+                            ])->columns(2),
+                    ])->contained(false)->activeTab(1)
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -83,7 +106,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PersonalInformationRelationManager::class,
+            ContractsRelationManager::class,
         ];
     }
 

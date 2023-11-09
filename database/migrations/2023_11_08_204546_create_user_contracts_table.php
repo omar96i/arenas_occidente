@@ -12,14 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('user_personal_information', function (Blueprint $table) {
+        Schema::create('user_contracts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('first_name');
-            $table->string('second_name');
-            $table->string('document');
-            $table->string('address');
-            $table->softDeletes();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->float('salary', 15,2);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_personal_information');
+        Schema::dropIfExists('user_contracts');
     }
 };

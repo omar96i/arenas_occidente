@@ -26,6 +26,10 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'full_name',
+        'last_name',
+        'document',
+        'address',
     ];
 
     /**
@@ -53,14 +57,9 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
-    /**
-     * Get the personal_information associated with the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function personal_information(): HasOne
+    public function contracts(): HasMany
     {
-        return $this->hasOne(UserPersonalInformation::class);
+        return $this->hasMany(UserContract::class);
     }
 
     /**
