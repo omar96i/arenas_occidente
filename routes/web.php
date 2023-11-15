@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserSalaryController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -21,3 +23,5 @@ header('Access-Control-Allow-Origin: *');
 Route::get('/test/{record}', function () {
     return "hola";
 })->name('test');
+
+Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);

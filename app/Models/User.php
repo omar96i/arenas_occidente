@@ -62,6 +62,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(UserContract::class);
     }
 
+    public function contract_active(): HasOne
+    {
+        return $this->hasOne(UserContract::class)->where('status', true);
+    }
+
     /**
      * Get all of the shifts for the User
      *
