@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $user = new User([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => '$2y$10$GcMCetLNqwxHAueZMnjXl.wKTlpuqWxwKR7gUS5bkU0hVrgTmzNDG',
+            'password' => '12345',
             'created_at' => '2023-10-12 14:17:02',
             'updated_at' => '2023-10-12 14:17:02',
         ]);
