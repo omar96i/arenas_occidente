@@ -14,19 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            EquipmentMachinerySeeder::class
-        ]);
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
         $user = new User([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => '12345',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
             'created_at' => '2023-10-12 14:17:02',
             'updated_at' => '2023-10-12 14:17:02',
         ]);
