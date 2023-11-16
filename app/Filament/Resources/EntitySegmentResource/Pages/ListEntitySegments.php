@@ -13,7 +13,7 @@ class ListEntitySegments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Crear turno'),
+            Actions\CreateAction::make()->label('Crear area'),
         ];
     }
 }

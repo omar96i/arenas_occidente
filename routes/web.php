@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserSalaryController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -31,3 +33,4 @@ Route::get('/entity/getShift/{shift}', [App\Http\Controllers\EntityController::c
 Route::get('/entity/shift/delete/{shift}', [App\Http\Controllers\EntityController::class, 'deleteShift'])->name('entity.delete.shift');
 
 
+Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);

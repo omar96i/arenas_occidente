@@ -26,12 +26,11 @@ class ContractsRelationManager extends RelationManager
         return $form
             ->schema([
                 DatePicker ::make('start_date')
-                    ->label('Fecha')
+                    ->label('Fecha de Inicio')
                     ->required()
                     ->displayFormat('d/m/Y'),
                 DatePicker ::make('end_date')
-                    ->label('Fecha')
-                    ->required()
+                    ->label('Fecha de Finalización')
                     ->displayFormat('d/m/Y'),
                 TextInput::make('salary')
                     ->numeric()

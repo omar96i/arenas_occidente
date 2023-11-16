@@ -119,6 +119,7 @@
         methods: {
 
             clickEventAction(id){
+
                 axios.get(`/entity/getShift/${id}`).then(res=>{
                     this.actualShift = res.data.shift
                     this.data = {
@@ -127,6 +128,7 @@
                         user : res.data.shift.user_id
                     }
                     this.selected_date = res.data.shift.date
+                    this.modalType = 'shift'
                     this.action = 'edit'
                     this.openModal = true
                 }).catch(error=>{
@@ -150,6 +152,7 @@
                 this.openModal = false
                 this.error = ''
                 this.modalType = ''
+
             },
 
             getEntity(aux = false){
@@ -285,6 +288,13 @@
                     user : 0
                 }
                 this.selected_date = ''
+                this.dataSegment = {
+                    entity_id : '',
+                    name : '',
+                    sub_title : '',
+                    time_limit : '',
+                }
+                this.modalType = 'shift'
                 this.closeModal()
             }
         },
@@ -323,9 +333,9 @@
                             </select>
                         </div>
                         <div class="w-full">
-                            <label for="filter2" class="block text-sm font-medium text-gray-700">Segmento</label>
+                            <label for="filter2" class="block text-sm font-medium text-gray-700">Area</label>
                             <select id="filter2" v-model="selected_segment" @change="getEmployees()" name="filter2" class="input-filament mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="0">Selecciona un segmento</option>
+                                <option value="0">Selecciona un Area</option>
                                 <option v-for="(segment, index) in find_entity.segments" :value="segment.id">{{ segment.name+" - "+segment.sub_title }}</option>
                             </select>
                         </div>
@@ -386,12 +396,26 @@
                         </div>
                         <div class="mt-3 text-center" v-if="modalType == 'form_segment'">
                             <div class="mt-3">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre del segmento:</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre del Area:</label>
                                 <input id="name" v-model="dataSegment.name" type="text" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
                             <div class="mt-3">
-                                <label for="sub_title" class="block text-sm font-medium text-gray-700">Sub titulo:</label>
-                                <input id="sub_title" v-model="dataSegment.sub_title" type="text" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <label for="sub_title" class="block text-sm font-medium text-gray-700">Mes:</label>
+                                <select id="sub_title" v-model="dataSegment.sub_title" name="filter2" class="input-filament mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="0">Selecciona un mes</option>
+                                    <option value="enero">Enero</option>
+                                    <option value="febrero">Febrero</option>
+                                    <option value="marzo">Marzo</option>
+                                    <option value="abril">Abril</option>
+                                    <option value="mayo">Mayo</option>
+                                    <option value="junio">Junio</option>
+                                    <option value="julio">Julio</option>
+                                    <option value="agosto">Agosto</option>
+                                    <option value="septiembre">Septiembre</option>
+                                    <option value="octubre">Octubre</option>
+                                    <option value="noviembre">Noviembre</option>
+                                    <option value="diciembre">Diciembre</option>
+                                </select>
                             </div>
                             <div class="mt-3">
                                 <label for="time_limit" class="block text-sm font-medium text-gray-700">Tiempo limite:</label>
@@ -408,11 +432,11 @@
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6" v-if="modalType == 'shift'">
                         <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="store()">{{ (action == 'edit') ? 'Editar registro' : 'Agregar nuevo registro' }}</button>
                         <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="deleteShift()" v-if="action == 'edit'">Eliminar registro</button>
-                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="closeModal()">Cerrar</button>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="resetData()">Cerrar</button>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6" v-if="modalType == 'form_segment'">
                         <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="storeSegment()">Agregar nuevo registro</button>
-                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="closeModal()">Cerrar</button>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="resetData()">Cerrar</button>
                     </div>
                 </div>
             </div>

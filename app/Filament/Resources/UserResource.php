@@ -56,7 +56,7 @@ class UserResource extends Resource
                         Tabs\Tab::make('Datos Personales')
                             ->schema([
                                 TextInput::make('full_name')
-                                    ->label('Nombre Completo')
+                                    ->label('Nombres')
                                      ->maxLength(191),
                                 TextInput::make('last_name')
                                     ->label('Apellidos')
