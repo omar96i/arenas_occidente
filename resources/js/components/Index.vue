@@ -321,7 +321,7 @@
         </div>
         <div>
             <div class="grid grid-cols-1">
-                <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="openModalAux('form_segment')">Agregar un nuevo segmento</button>
+                <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="openModalAux('form_segment')">Agregar una nueva area</button>
                 <div class="p-3">
                     <h4>Buscar por:</h4><br>
                     <div class="flex flex-col space-y-4">
