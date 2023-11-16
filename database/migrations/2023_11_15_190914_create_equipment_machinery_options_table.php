@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('equipment_option_categories', function (Blueprint $table) {
+        Schema::create('equipment_machinery_options', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('equipment_machinery_categories_id')->constrained()
+                ->constrained()
+                ->name('fk_options_categories'); //solucion a error de foranea por la logitud del nombre
             $table->string('name');
             $table->timestamps();
         });
-        Schema::enableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();    
     }
 
     /**
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipment_option_categories');
+        Schema::dropIfExists('equipment_machinery_options');
     }
 };

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\EquipmentOptionCategoryResource\RelationManagers;
+namespace App\Filament\Resources\EquipmentMachineryCategoryResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,19 +14,18 @@ class OptionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'options';
 
-    protected static ?string $modelLabel = 'Opcion';
+    protected static ?string $modelLabel = 'Opción';
 
     protected static ?string $title = 'Opciones';
-
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->label('Nombre de la opcion')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])->columns(1);
     }
 
     public function table(Table $table): Table
@@ -40,10 +39,12 @@ class OptionsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->modalWidth('sm'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->modalWidth('sm'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

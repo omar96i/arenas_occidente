@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Equipment extends Model
+class EquipmentMachinery extends Model
 {
     use HasFactory;
 
@@ -22,13 +22,13 @@ class Equipment extends Model
         'status',
     ];
 
-    /**
-     * Get all of the options for the Equiment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function options(): HasMany
+    public function values(): HasMany
     {
-        return $this->hasMany(EquipmentEquipmentOption::class);
+        return $this->hasMany(EquipmentMachineryValue::class);
+    }
+
+    public function maintenance(): HasMany
+    {
+        return $this->hasMany(EquipmentMachineryMaintenance::class);
     }
 }

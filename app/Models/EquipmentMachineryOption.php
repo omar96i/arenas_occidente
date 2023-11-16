@@ -7,14 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class EquipmentOption extends Model
+class EquipmentMachineryOption extends Model
 {
     use HasFactory;
 
-    protected $table = "equipment_options";
-
     protected $fillable = [
-        'equipment_option_category_id',
+        'equipment_machinery_category_id',
         'name',
     ];
 
@@ -25,7 +23,7 @@ class EquipmentOption extends Model
      */
     public function equipments(): HasMany
     {
-        return $this->hasMany(EquipmentEquipmentOption::class, 'equipment_option_id');
+        return $this->hasMany(EquipmentMachineryValue::class, 'equipment_machinery_option_id');
     }
 
     /**
@@ -35,6 +33,6 @@ class EquipmentOption extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(EquipmentOptionCategory::class, 'equipment_option_category_id');
+        return $this->belongsTo(EquipmentMachineryCategory::class, 'equipment_machinery_category_id');
     }
 }

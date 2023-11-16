@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::create('equipment_options', function (Blueprint $table) {
+        Schema::create('equipment_machineries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('equipment_option_category_id');
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->string('register_number')->nullable();
+            $table->string('status')->nullable();
+            $table->text('file_img')->nullable();
             $table->timestamps();
         });
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipment_options');
+        Schema::dropIfExists('equipment_machineries');
     }
 };

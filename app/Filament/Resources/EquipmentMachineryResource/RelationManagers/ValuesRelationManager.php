@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\EquipmentResource\RelationManagers;
+namespace App\Filament\Resources\EquipmentMachineryResource\RelationManagers;
 
-use App\Models\EquipmentOption;
+use App\Models\EquipmentMachineryOption;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -11,28 +11,29 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OptionsRelationManager extends RelationManager
+class ValuesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'options';
+    protected static string $relationship = 'values';
 
-    protected static ?string $title = 'Parametros';
+    protected static ?string $title = 'Datos';
 
-    protected static ?string $modelLabel = 'Parametro';
+    protected static ?string $modelLabel = 'Dato';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('equipment_option_id')->label('Parametro a usar')
+                Forms\Components\Select::make('equipment_machinery_option_id')
                     ->options(function($livewire){
                         $record_id = $livewire->ownerRecord->id;
-                        $options = EquipmentOption::whereDoesntHave('equipments', function ($query) use ($record_id) {
-                            $query->where('equipment_id', $record_id);
+                        $options = EquipmentMachineryOption::whereDoesntHave('equipments', function ($query) use ($record_id) {
+                            $query->where('equipment_machinery_id', $record_id);
                         })->get();
                         if ($options) {
                             return $options->pluck('name', 'id')->toArray();
                         }
                     })
+                    ->label('Parametro a usar')
                     ->required(),
                 Forms\Components\TextInput::make('value')->label('Valor a asignar')
                     ->required()
@@ -45,8 +46,8 @@ class OptionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('value')
             ->columns([
-                Tables\Columns\TextColumn::make('value')->label('Valor asignado'),
                 Tables\Columns\TextColumn::make('option.name')->label('Nombre del parametro'),
+                Tables\Columns\TextColumn::make('value')->label('Valor asignado'),
             ])
             ->filters([
                 //
