@@ -21,15 +21,15 @@ class EntitySegmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationLabel = 'Turnos';
+    protected static ?string $navigationLabel = 'Areas';
 
-    protected static ?string $slug = 'turnos';
+    protected static ?string $slug = 'areas';
 
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationGroup = 'Administracion de turnos y contratos';
 
-    protected static ?string $pluralModelLabel = 'turnos';
+    protected static ?string $pluralModelLabel = 'Areas';
 
     public static function form(Form $form): Form
     {
@@ -38,12 +38,26 @@ class EntitySegmentResource extends Resource
                 Forms\Components\Select::make('entity_id')->label('Seleccionar un contrato')
                     ->relationship('entity', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('name')->label('Nombre')
+                Forms\Components\TextInput::make('name')->label('Nombre del area')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('sub_title')->label('Sub titulo')
+                Forms\Components\Select::make('sub_title')
+                    ->label('Mes')
                     ->required()
-                    ->maxLength(191),
+                    ->options([
+                        'enero' => 'Enero',
+                        'febrero' => 'Febrero',
+                        'marzo' => 'Marzo',
+                        'abril' => 'Abril',
+                        'mayo' => 'Mayo',
+                        'junio' => 'Junio',
+                        'julio' => 'Julio',
+                        'agosto' => 'Agosto',
+                        'septiembre' => 'Septiembre',
+                        'octubre' => 'Octubre',
+                        'noviembre' => 'Noviembre',
+                        'diciembre' => 'Diciembre',
+                    ]),
                 Forms\Components\TextInput::make('time_limit')->label('Limite de horas')
                     ->required()->numeric(),
             ]);

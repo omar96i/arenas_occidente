@@ -2,16 +2,16 @@
     <section>
         <div class="flex flex-row">
             <div class="basis-2/5 mx-2">
-                <label for="select_entity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Entidad:</label>
+                <label for="select_entity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Contrato:</label>
                 <select id="select_entity" v-model="select_entity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected disabled value=''>Seleccion una entidad</option>
+                    <option selected disabled value=''>Seleccion un contrato</option>
                     <option v-for="(item, index) in entities" :value="item">{{item.name}}</option>
                 </select>
             </div>
             <div class="basis-2/5 mx-2">
-                <label for="select_segment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Segmento:</label>
+                <label for="select_segment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Area:</label>
                 <select id="select_segment" v-model="select_segment" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected disabled value=''>Selecciona un segmento</option>
+                    <option selected disabled value=''>Selecciona un area</option>
                     <template v-for="(item, index) in segments">
                         <option v-if="item.entity_id === select_entity.id" :value="item">{{item.name}}</option>
                     </template>
@@ -34,10 +34,10 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-4 font-medium text-gray-900">Contrato</th>
-                        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Segmento</th>
+                        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Area</th>
                         <th scope="col" class="px-6 py-4 font-medium text-gray-900">Usuario</th>
                         <th scope="col" class="px-6 py-4 font-medium text-gray-900">Salario</th>
-                        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Salario x segmento</th>
+                        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Salario x Area</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 border-t border-gray-100">
@@ -86,7 +86,7 @@
                                     :class="{ 'fi-btn-active': activeTab === 'segmento' }"
                                     class="fi-btn fi-btn-segmento"
                                     >
-                                    <span class="fi-btn-label">Segmento</span>
+                                    <span class="fi-btn-label">Area</span>
                                 </button>
 
                                 <div v-if="activeTab === 'base'">
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div v-else-if="activeTab === 'segmento'">
                                     <div class="flex flex-col space-y-4">
                                         <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5">
@@ -186,12 +186,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">Crear nuevo turno</button>
                         <button type="button" class="mt-3  inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="closeModal()">Cerrar</button>
                     </div>
                 </div>
@@ -312,25 +311,25 @@ export default {
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
   cursor: pointer;
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
 }
 
 .fi-btn:hover {
-  background-color: #ffae42; 
+  background-color: #ffae42;
 }
 
 .fi-btn-label {
-  color: #333; 
+  color: #333;
 }
 
 .fi-btn-active {
   background-color: #f58120;
-  color: white; 
-  border-color: #f58120; 
+  color: white;
+  border-color: #f58120;
 }
 
 .fi-btn-search {
-  background-color: #ffae42; 
+  background-color: #ffae42;
   color: white;
   border-color: #ffae42;
 }
