@@ -51,7 +51,6 @@ class UserResource extends Resource
                                     ->maxLength(191),
                                 TextInput::make('password')->label('Contraseña')
                                     ->password()
-                                    ->required()
                                     ->maxLength(191),
                             ])->columns(2),
                         Tabs\Tab::make('Datos Personales')
@@ -61,7 +60,6 @@ class UserResource extends Resource
                                      ->maxLength(191),
                                 TextInput::make('last_name')
                                     ->label('Apellidos')
-                                    ->email()
                                     ->maxLength(191),
                                 TextInput::make('document')
                                     ->label('Documento')
