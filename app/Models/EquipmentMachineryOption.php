@@ -12,7 +12,7 @@ class EquipmentMachineryOption extends Model
     use HasFactory;
 
     protected $fillable = [
-        'equipment_machinery_category_id',
+        'equipment_machinery_categories_id',
         'name',
     ];
 
@@ -33,6 +33,6 @@ class EquipmentMachineryOption extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(EquipmentMachineryCategory::class, 'equipment_machinery_category_id');
+        return $this->belongsTo(EquipmentMachineryCategory::class, 'equipment_machinery_categories_id');
     }
 }

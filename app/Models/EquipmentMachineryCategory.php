@@ -16,6 +16,6 @@ class EquipmentMachineryCategory extends Model
 
     public function options(): HasMany
     {
-        return $this->hasMany(EquipmentMachineryOption::class, 'equipment_machinery_category_id');
+        return $this->hasMany(EquipmentMachineryOption::class, 'equipment_machinery_categories_id');
     }
 }
