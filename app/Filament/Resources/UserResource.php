@@ -8,6 +8,7 @@ use App\Filament\Resources\UserResource\RelationManagers\ContractsRelationManage
 use App\Filament\Resources\UserResource\RelationManagers\PersonalInformationRelationManager;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
@@ -38,37 +39,34 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Tabs::make('Label')
-                    ->tabs([
-                        Tab::make('Usuario')
-                            ->schema([
-                                TextInput::make('name')->label('Nombre de Usuario')
-                                    ->required()
-                                    ->maxLength(191),
-                                TextInput::make('email')->label('Email')
-                                    ->email()
-                                    ->required()
-                                    ->maxLength(191),
-                                TextInput::make('password')->label('Contraseña')
-                                    ->password()
-                                    ->maxLength(191),
-                            ])->columns(2),
-                        Tabs\Tab::make('Datos Personales')
-                            ->schema([
-                                TextInput::make('full_name')
-                                    ->label('Nombres')
-                                     ->maxLength(191),
-                                TextInput::make('last_name')
-                                    ->label('Apellidos')
-                                    ->maxLength(191),
-                                TextInput::make('document')
-                                    ->label('Documento')
-                                    ->maxLength(191),
-                                TextInput::make('address')
-                                    ->label('Dirección')
-                                    ->maxLength(191),
-                            ])->columns(2),
-                    ])->contained(false)->activeTab(1)
+                TextInput::make('name')->label('Nombre de Usuario')
+                    ->required()
+                    ->maxLength(191),
+                TextInput::make('email')->label('Email')
+                    ->email()
+                    ->required()
+                    ->maxLength(191),
+                TextInput::make('password')->label('Contraseña')
+                    ->password()
+                    ->maxLength(191)
+                    ->required()
+                    ->hiddenOn('edit'),
+                TextInput::make('full_name')
+                    ->label('Nombres')
+                    ->maxLength(191)
+                    ->required(),
+                TextInput::make('last_name')
+                    ->label('Apellidos')
+                    ->maxLength(191)
+                    ->required(),
+                TextInput::make('document')
+                    ->label('Documento')
+                    ->required()
+                    ->maxLength(191),
+                TextInput::make('address')
+                    ->label('Dirección')
+                    ->required()
+                    ->maxLength(191),
             ])->columns(1);
     }
 
