@@ -32,5 +32,7 @@ Route::get('/entity/getEmployee/{segment}', [App\Http\Controllers\EntityControll
 Route::get('/entity/getShift/{shift}', [App\Http\Controllers\EntityController::class, 'getShift'])->name('entity.get.shift');
 Route::get('/entity/shift/delete/{shift}', [App\Http\Controllers\EntityController::class, 'deleteShift'])->name('entity.delete.shift');
 
+Route::get('/equipmentMachinary/get', [App\Http\Controllers\EquipmentMachinaryController::class, 'get'])->name('equipment.machinary.get');
+
 
 Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);

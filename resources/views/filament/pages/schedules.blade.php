@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <x-filament::section>
         <div id="app">
-            <calendar-index></calendar-index>
+            <schedule-index></schedule-index>
         </div>
     </x-filament::section>
 

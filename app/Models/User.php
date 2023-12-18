@@ -76,4 +76,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(EntityShift::class);
     }
+
+    /**
+     * Get all of the oil_applicants for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function oil_applicants(): HasMany
+    {
+        return $this->hasMany(OilControl::class, 'user_id');
+    }
 }

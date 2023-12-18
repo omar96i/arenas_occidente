@@ -31,7 +31,7 @@ class EquipmentMachineryMaintenanceResource extends Resource
 
     protected static ?string $slug = 'mantenimiento';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $modelLabel = 'Mantenimiento';
 
@@ -40,26 +40,26 @@ class EquipmentMachineryMaintenanceResource extends Resource
     public static function form(Form $form): Form
     {
         $activities = [
-            ['activity' => 'Cambio Aceite Motor', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Caja de Velocidades', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Transmision', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Servo', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Hidraulico', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Hidraulico Direccion', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Aceite Reductores', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Cambio Agua de Radiador', 'cod' => '', 'cant' => '',],				
-            ['activity' => 'Engrasada General', 'cod' => '', 'cant' => '',],	
-            ['activity' => 'Cambio Filtro Aceite Motor', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Combustible Primario', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Combustible Secund', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Aire Primario', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Aire Secundario', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro de Agua', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Hidraulico', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Cambio Filtro Hidraulico Direccion', 'cod' => '', 'cant' => '',],			
+            ['activity' => 'Cambio Aceite Motor', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Caja de Velocidades', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Transmision', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Servo', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Hidraulico', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Hidraulico Direccion', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Aceite Reductores', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Agua de Radiador', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Engrasada General', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Aceite Motor', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Combustible Primario', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Combustible Secund', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Aire Primario', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Aire Secundario', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro de Agua', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Hidraulico', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Cambio Filtro Hidraulico Direccion', 'cod' => '', 'cant' => '',],
             ['activity' => 'Cambio Filtro Servotransmision', 'cod' => '', 'cant' => '',],
-            ['activity' => 'Cambio Filtro Secador Aire', 'cod' => '', 'cant' => '',],			
-            ['activity' => 'Sopleteo Filtro Aire', 'cod' => '', 'cant' => '',],									
+            ['activity' => 'Cambio Filtro Secador Aire', 'cod' => '', 'cant' => '',],
+            ['activity' => 'Sopleteo Filtro Aire', 'cod' => '', 'cant' => '',],
         ];
 
         return $form
@@ -173,14 +173,14 @@ class EquipmentMachineryMaintenanceResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -188,5 +188,5 @@ class EquipmentMachineryMaintenanceResource extends Resource
             'create' => Pages\CreateEquipmentMachineryMaintenance::route('/create'),
             'edit' => Pages\EditEquipmentMachineryMaintenance::route('/{record}/edit'),
         ];
-    }    
+    }
 }

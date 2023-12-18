@@ -119,7 +119,6 @@
         methods: {
 
             clickEventAction(id){
-
                 axios.get(`/entity/getShift/${id}`).then(res=>{
                     this.actualShift = res.data.shift
                     this.data = {

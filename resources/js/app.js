@@ -1,12 +1,14 @@
 import './bootstrap';
 import { createApp } from 'vue'
-import HelloWorld from './components/Index.vue'
+import CalendarIndex from './components/Index.vue'
 import UserSummary from './components/user_summary/index.vue'
+import ScheduleIndex from './components/schedules/Index.vue'
 
 
 window.app = createApp({
     components: {
-        HelloWorld,
-        UserSummary
+        CalendarIndex,
+        UserSummary,
+        ScheduleIndex
     },
 }).mount('#app');

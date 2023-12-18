@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EquipmentMachineryResource\Pages;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\MaintenanceRelationManager;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\SchedulesRelationManager;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\ValuesRelationManager;
 use App\Models\EquipmentMachinery;
 use Filament\Forms;
@@ -28,6 +29,8 @@ class EquipmentMachineryResource extends Resource
     protected static ?string $modelLabel = 'Equipos y Maquinaria';
 
     protected static ?string $navigationGroup = 'Administración de maquinaria y equipos';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -95,15 +98,16 @@ class EquipmentMachineryResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             ValuesRelationManager::class,
             MaintenanceRelationManager::class,
+            SchedulesRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -111,5 +115,5 @@ class EquipmentMachineryResource extends Resource
             'create' => Pages\CreateEquipmentMachinery::route('/create'),
             'edit' => Pages\EditEquipmentMachinery::route('/{record}/edit'),
         ];
-    }    
+    }
 }

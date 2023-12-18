@@ -28,6 +28,8 @@ class EquipmentMachineryCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de maquinaria y equipos';
 
+    protected static ?int $navigationSort = 0;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -67,14 +69,14 @@ class EquipmentMachineryCategoryResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             OptionsRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -82,5 +84,5 @@ class EquipmentMachineryCategoryResource extends Resource
             // 'create' => Pages\CreateEquipmentMachineryCategory::route('/create'),
             'edit' => Pages\EditEquipmentMachineryCategory::route('/{record}/edit'),
         ];
-    }    
+    }
 }
