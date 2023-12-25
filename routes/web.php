@@ -24,6 +24,9 @@ Route::get('/test/{record}', function () {
     return "hola";
 })->name('test');
 
+Route::get('/test/scraping', [App\Http\Controllers\ScrapingController::class, 'index']);
+
+
 Route::get('/entity/get', [App\Http\Controllers\EntityController::class, 'getEntities'])->name('entity.get');
 Route::post('/entity/segment/store', [App\Http\Controllers\EntityController::class, 'storeSegment'])->name('entity.segment.store');
 Route::post('/entity/shift/store', [App\Http\Controllers\EntityController::class, 'storeShift'])->name('entity.shift.store');
