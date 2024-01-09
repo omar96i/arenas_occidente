@@ -39,3 +39,9 @@ Route::get('/equipmentMachinary/get', [App\Http\Controllers\EquipmentMachinaryCo
 
 
 Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);
+Route::post('/maintenance/scheduling/store', [App\Http\Controllers\MaintenanceSchedulingController::class, 'store'])->name('maintenance.scheduling.store');
+Route::post('/maintenance/scheduling/update/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'update'])->name('maintenance.scheduling.update');
+Route::get('/maintenance/scheduling/get/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'get'])->name('maintenance.scheduling.get');
+Route::get('/maintenance/scheduling/delete/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'delete'])->name('maintenance.scheduling.delete');
+
+

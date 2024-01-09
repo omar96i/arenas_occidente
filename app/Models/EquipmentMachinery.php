@@ -92,4 +92,14 @@ class EquipmentMachinery extends Model
     {
         return $this->hasMany(EquipmentMachineryTechno::class, 'equipment_machinery_id');
     }
+
+    /**
+     * Get all of the inspection_control for the EquipmentMachinery
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function inspection_control(): HasMany
+    {
+        return $this->hasMany(EMInspectionControl::class, 'equipment_machinery_id');
+    }
 }
