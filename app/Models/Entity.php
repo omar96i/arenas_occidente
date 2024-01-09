@@ -39,4 +39,14 @@ class Entity extends Model
     {
         return $this->hasMany(EntitySegment::class, 'entity_id');
     }
+
+        /**
+     * Get all of the labors for the Entity
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function labors(): HasMany
+    {
+        return $this->hasMany(EquipmentMachineryLabor::class, 'entity_id');
+    }
 }

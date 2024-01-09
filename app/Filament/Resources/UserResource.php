@@ -9,6 +9,7 @@ use App\Filament\Resources\UserResource\RelationManagers\PersonalInformationRela
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
@@ -67,6 +68,14 @@ class UserResource extends Resource
                     ->label('Dirección')
                     ->required()
                     ->maxLength(191),
+                Select::make('position')
+                    ->label('Cargo')
+                    ->options([
+                        'conductor' => 'Conductor',
+                        'operario' => 'Operario',
+                        'administracion' => 'Administración',
+                    ])
+                    ->required(),
             ])->columns(1);
     }
 
