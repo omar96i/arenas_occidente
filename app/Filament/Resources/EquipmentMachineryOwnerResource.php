@@ -27,7 +27,7 @@ class EquipmentMachineryOwnerResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de maquinaria y equipos';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

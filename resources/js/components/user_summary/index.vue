@@ -19,11 +19,7 @@
             </div>
             <div class="mx-2">
                 <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
-                    <button @click="getUsersSalary()" style="--c-400:var(--primary-400);--c-500:var(--primary-500);--c-600:var(--primary-600);" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus:ring-2 rounded-lg fi-color-custom fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-custom-600 text-white hover:bg-custom-500 dark:bg-custom-500 dark:hover:bg-custom-400 focus:ring-custom-500/50 dark:focus:ring-custom-400/50 fi-ac-btn-action">
-                        <span class="fi-btn-label">
-                            Buscar
-                        </span>
-                    </button>
+                    <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="getUsersSalary()">Buscar</button>
                 </div>
             </div>
         </div>

@@ -30,6 +30,7 @@ class User extends Authenticatable implements FilamentUser
         'last_name',
         'document',
         'address',
+        'position'
     ];
 
     /**
@@ -85,5 +86,15 @@ class User extends Authenticatable implements FilamentUser
     public function oil_applicants(): HasMany
     {
         return $this->hasMany(OilControl::class, 'user_id');
+    }
+
+    /**
+     * Get all of the labors for the User with position driver
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function labors(): HasMany
+    {
+        return $this->hasMany(EquipmentMachineryLabor::class, 'user_id');
     }
 }
