@@ -21,6 +21,10 @@
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                     <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="text-center">
+                            <strong><h4>{{ selected_date }}</h4></strong>
+                        </div>
+
                         <div class="mt-3 text-center" >
                             <div class="mt-3">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Descripción</label>
@@ -34,8 +38,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6" v-if="modalType == 'insert'">
                         <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="store()">Agregar nuevo registro</button>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="resetData()">Cerrar</button>
+                    </div>
+
+                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6" v-if="modalType == 'edit'">
+                        <button type="button" class="primary inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" @click="store()">Editar</button>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="deleteScheduling()">Eliminar registro</button>
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" @click="resetData()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -75,22 +86,30 @@ export default {
             selected_date : '',
             openModal : false,
             data : {
-                description : ''
+                description : '',
+                date : ''
             },
-            error : ''
+            error : '',
+            modalType : 'insert'
         }
     },
     created(){
         this.getEquipment()
     },
     methods:{
-        getEquipment(){
+        getEquipment(aux = false){
             axios.get('/equipmentMachinary/get').then(res=>{
                 this.equipments = res.data.equipments
+                if(aux){
+                    this.loading = false
+                    this.setEquipment()
+                }
             }).catch(error=>{
                 console.log(error.response)
             })
         },
+
+
 
         setEquipment(){
             if(this.selected_equipment != 0){
@@ -108,14 +127,62 @@ export default {
         },
 
         clickEventAction(id){
-            console.log(id)
+            axios.get(`/maintenance/scheduling/get/${id}`).then(res=>{
+                this.data = res.data.scheduling
+                this.selected_date = res.data.scheduling.date
+                this.modalType = 'edit'
+                this.openModal = true
+            }).catch(error=>{
+                console.log(error.response)
+            })
         },
 
         handleDateClick: function(arg) {
             this.selected_date = arg.dateStr
+            this.openModal = true
         },
 
         store(){
+            let request = (this.modalType == 'edit') ?
+
+                this.data
+
+                :
+
+                {
+                    description : this.data.description,
+                    date : this.selected_date,
+                    equipment_machinery_id : this.selected_equipment
+                }
+
+            let route = (this.modalType == 'edit') ? `/maintenance/scheduling/update/${this.data.id}` : `/maintenance/scheduling/store`
+
+            axios.post(route, request).then(res=>{
+                if(res.data.status){
+                    this.getEquipment(true)
+                }
+            }).catch(error=>{
+                console.log(error.response)
+            }).finally(()=>{
+                this.resetData()
+            })
+        },
+
+        deleteScheduling(){
+            axios.get(`/maintenance/scheduling/delete/${this.data.id}`).then(res=>{
+                if(res.data.status){
+                    this.getEquipment(true)
+                }
+            }).finally(()=>{
+                this.resetData()
+            })
+        },
+
+        resetData(){
+            this.data.description = ''
+            this.selected_date = ''
+            this.modalType = 'insert'
+            this.openModal = false
         }
     }
 }

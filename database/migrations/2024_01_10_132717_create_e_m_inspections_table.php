@@ -1,0 +1,130 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('e_m_inspections', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('equipment_machinery_id')->constrained();
+            $table->json('hourometer')->nullable();
+            $table->json('property_card')->nullable();
+            $table->json('soat')->nullable();
+            $table->json('technomechanical')->nullable();
+            $table->json('company_card')->nullable();
+            $table->json('ingenio_card')->nullable();
+            $table->json('driving_license')->nullable();
+            $table->json('helmet')->nullable();
+            $table->json('boots')->nullable();
+            $table->json('uniform')->nullable();
+            $table->json('glasses')->nullable();
+            $table->json('extinguisher')->nullable();
+            $table->json('kit')->nullable();
+            $table->json('reflective_tapes')->nullable();
+            $table->json('cones')->nullable();
+            $table->json('reflective_vest')->nullable();
+            $table->json('anti_spill_kit')->nullable();
+            $table->json('cleanliness')->nullable();
+            $table->json('access_to_machine')->nullable();
+            $table->json('ear_cap')->nullable();
+            $table->json('frontal')->nullable();
+            $table->json('left_side')->nullable();
+            $table->json('right_side')->nullable();
+            $table->json('rear')->nullable();
+            $table->json('tires')->nullable();
+            $table->json('mileage')->nullable();
+            $table->json('leaks')->nullable();
+            $table->json('pending')->nullable();
+            $table->json('streetlights')->nullable();
+            $table->json('stops')->nullable();
+            $table->json('braking_lights')->nullable();
+            $table->json('directional')->nullable();
+            $table->json('parking_lot')->nullable();
+            $table->json('interior_lights')->nullable();
+            $table->json('reverse_alarm')->nullable();
+            $table->json('whistle')->nullable();
+            $table->json('nibs')->nullable();
+            $table->json('how_i_drive')->nullable();
+            $table->json('encarped')->nullable();
+            $table->json('grease')->nullable();
+            $table->json('brake_fluid')->nullable();
+            $table->json('pedal_return')->nullable();
+            $table->json('parking_brake')->nullable();
+            $table->json('tubes')->nullable();
+            $table->json('battery')->nullable();
+            $table->json('electric_cables')->nullable();
+            $table->json('refrigeration_system')->nullable();
+            $table->json('coolant_level')->nullable();
+            $table->json('oil_leaks_without')->nullable();
+            $table->json('oil_leaks_with')->nullable();
+            $table->json('engine_state')->nullable();
+            $table->json('gear_box')->nullable();
+            $table->json('fuel_tank')->nullable();
+            $table->json('hydraulic_oil_tank')->nullable();
+            $table->json('hydraulic_oil_cooler')->nullable();
+            $table->json('hoses')->nullable();
+            $table->json('engine_oil_level')->nullable();
+            $table->json('visual_inspection_engine_oil')->nullable();
+            $table->json('transmission_oil_level')->nullable();
+            $table->json('transmission_oil_inspection')->nullable();
+            $table->json('differential_oil_level')->nullable();
+            $table->json('differential_oil_inspection')->nullable();
+            $table->json('hydraulic_oil_level')->nullable();
+            $table->json('hydraulic_oil_inspection')->nullable();
+            $table->json('check_air_filters')->nullable();
+            $table->json('filters_with_sunken')->nullable();
+            $table->json('leaking_filters')->nullable();
+            $table->json('visible_drive_organs')->nullable();
+            $table->json('pen_and_shovel')->nullable();
+            $table->json('warning_signs')->nullable();
+            $table->json('stop_device')->nullable();
+            $table->json('lifting_cylinders')->nullable();
+            $table->json('articulation_cylinders')->nullable();
+            $table->json('cylinder_pins')->nullable();
+            $table->json('easy_access')->nullable();
+            $table->json('seat')->nullable();
+            $table->json('damaged_items')->nullable();
+            $table->json('temperature_indicator')->nullable();
+            $table->json('oil_indicator')->nullable();
+            $table->json('fuel_indicator')->nullable();
+            $table->json('battery_indicator')->nullable();
+            $table->json('a_c')->nullable();
+            $table->json('general_structure')->nullable();
+            $table->json('doors')->nullable();
+            $table->json('exhaust_pipe')->nullable();
+            $table->json('front_left_1')->nullable();
+            $table->json('front_right_2')->nullable();
+            $table->json('middle_left_die_3')->nullable();
+            $table->json('middle_left_die_4')->nullable();
+            $table->json('middle_right_die_5')->nullable();
+            $table->json('middle_right_die_6')->nullable();
+            $table->json('last_left_die_7')->nullable();
+            $table->json('last_left_die_8')->nullable();
+            $table->json('last_right_die_9')->nullable();
+            $table->json('last_right_die_10')->nullable();
+            $table->json('spare_tires')->nullable();
+            $table->json('wheels')->nullable();
+            $table->json('nuts')->nullable();
+            $table->json('tire_pressure')->nullable();
+            $table->json('mirrors')->nullable();
+            $table->json('windshield')->nullable();
+            $table->text('observations')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('e_m_inspections');
+    }
+};

@@ -4,8 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EquipmentMachineryResource\Pages;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\InspectionControlRelationManager;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\InsuranceRelationManager;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\MaintenanceRelationManager;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\OwnerRelationManager;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\SchedulesRelationManager;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\SoatsRelationManager;
+use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\TechnosRelationManager;
 use App\Filament\Resources\EquipmentMachineryResource\RelationManagers\ValuesRelationManager;
 use App\Models\EquipmentMachinery;
 use Filament\Forms;
@@ -105,6 +110,11 @@ class EquipmentMachineryResource extends Resource
             ValuesRelationManager::class,
             MaintenanceRelationManager::class,
             SchedulesRelationManager::class,
+            InspectionControlRelationManager::class,
+            TechnosRelationManager::class,
+            InsuranceRelationManager::class,
+            SoatsRelationManager::class,
+            OwnerRelationManager::class,
         ];
     }
 
