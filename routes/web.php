@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserSalaryController;
+use App\Models\EquipmentMachinery;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -37,5 +38,6 @@ Route::get('/entity/shift/delete/{shift}', [App\Http\Controllers\EntityControlle
 
 Route::get('/equipmentMachinary/get', [App\Http\Controllers\EquipmentMachinaryController::class, 'get'])->name('equipment.machinary.get');
 
+Route::get('/equipmentMachinary/fuels/get/{month}/{year}', [App\Http\Controllers\EquipmentMachinaryController::class, 'getFuels'])->name('equipment.machinary.get.fuels');
 
 Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);
