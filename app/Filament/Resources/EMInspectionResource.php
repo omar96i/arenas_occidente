@@ -411,7 +411,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -426,7 +426,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -441,7 +441,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -456,7 +456,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -471,7 +471,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -486,7 +486,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -501,7 +501,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -516,7 +516,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    FileUpload::make('observations')->label('Subir evidencia'),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
