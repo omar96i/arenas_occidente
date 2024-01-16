@@ -40,27 +40,26 @@ class OilSupplier extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    // functions
 
-    public static function boot()
-    {
-        parent::boot();
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-        static::saved(function ($model) {
-            $stock = $model->stock;
-            $stock_2 = $model->stock_2;
+    //     static::saved(function ($model) {
+    //         $stock = $model->stock;
+    //         $stock_2 = $model->stock_2;
 
-            $oil = Oil::where('id', $model->oil_id)->first();
+    //         $oil = Oil::where('id', $model->oil_id)->first();
 
-            if ($stock !== null && $stock > 0) {
-                $oil->increment('stock', $stock);
-            }
+    //         if ($stock !== null && $stock > 0) {
+    //             $oil->increment('stock', $stock);
+    //         }
 
-            if ($stock_2 !== null && $stock_2 > 0) {
-                $oil->increment('stock', $stock_2 * 50);
-            }
+    //         if ($stock_2 !== null && $stock_2 > 0) {
+    //             $oil->increment('stock', $stock_2 * 50);
+    //         }
 
-            $oil->save();
-        });
-    }
+    //         $oil->save();
+    //     });
+    // }
 }

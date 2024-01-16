@@ -14,11 +14,9 @@ class OilControl extends Model
         'user_id',
         'oil_id',
         'equipment_machinery_id',
-        'month',
-        'year',
+        'date',
+        'area',
         'amount',
-        'cost_per_gallon',
-        'cost_total',
     ];
 
     /**
@@ -51,16 +49,4 @@ class OilControl extends Model
         return $this->belongsTo(EquipmentMachinery::class, 'equipment_machinery_id');
     }
 
-    // Mutadors
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = $value;
-        $this->attributes['cost_total'] = $value * $this->cost_per_gallon;
-    }
-
-    public function setCostPerGallonAttribute($value)
-    {
-        $this->attributes['cost_per_gallon'] = $value;
-        $this->attributes['cost_total'] = $this->amount * $value;
-    }
 }

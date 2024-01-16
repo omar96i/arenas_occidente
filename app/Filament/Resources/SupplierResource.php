@@ -34,6 +34,18 @@ class SupplierResource extends Resource
                 Forms\Components\TextInput::make('name')->label('Nombre del proveedor')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\TextInput::make('nit')->label('NIT')
+                    ->required()
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('address')->label('Dirección')
+                    ->required()
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('phone')->label('Teléfono')
+                    ->required()
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('contact')->label('Contacto asesor')
+                    ->required()
+                    ->maxLength(191),
             ]);
     }
 
@@ -41,13 +53,21 @@ class SupplierResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Nombre del proveedore')
+                Tables\Columns\TextColumn::make('name')->label('Nombre del proveedor')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('nit')->label('NIT')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('address')->label('Dirección')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')->label('Teléfono')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contact')->label('Contacto asesor')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->label('Fecha de actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
