@@ -17,9 +17,10 @@ class EquipmentMachineryFuel extends Model
     protected $fillable = [
         'date',
         'equipment_machinery_id',
+        'price_acpm',
         'acpm',
         'horom_tanq',
-        'source',
+        'em_fuel_source_id',
         'consecutive_ing',
         'file_img',
         'user_id',
@@ -33,5 +34,10 @@ class EquipmentMachineryFuel extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function source(): BelongsTo
+    {
+        return $this->belongsTo(EmFuelSources::class, 'em_fuel_source_id');
     }
 }

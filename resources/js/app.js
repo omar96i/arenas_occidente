@@ -11,5 +11,7 @@ window.app = createApp({
         CalendarIndex,
         UserSummary,
         ScheduleIndex,
+        PruebaIndex,
+        EquipmentFuel
     },
 }).mount('#app');

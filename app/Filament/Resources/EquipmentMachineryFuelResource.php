@@ -4,10 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EquipmentMachineryFuelResource\Pages;
 use App\Filament\Resources\EquipmentMachineryFuelResource\RelationManagers;
+use App\Models\EquipmentMachinery;
 use App\Models\EquipmentMachineryFuel;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,30 +39,6 @@ class EquipmentMachineryFuelResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $sources = [
-            'CARROTANQUE SOB792' => 'CARROTANQUE SOB792',
-            'CARROTANQUE WMB462' => 'CARROTANQUE WMB462',
-            'EDS ANTIOQUEÑA' => 'EDS ANTIOQUEÑA',
-            'ESTACION TERPEL PUERTA DEL SUR CANDELARIA' => 'ESTACION TERPEL PUERTA DEL SUR CANDELARIA',
-            'INGENIO' => 'INGENIO',
-            'PORRONES MAYAGUEZ' => 'PORRONES MAYAGUEZ',
-            'TANQUE SAN CARLOS' => 'TANQUE SAN CARLOS',
-            'RIO PAILA' => 'RIO PAILA',
-            'EDS ZEUS' => 'EDS ZEUS',
-            'ESTACION BRIO CANDELARIA EL ARENAL' => 'ESTACION BRIO CANDELARIA EL ARENAL',
-            'ESTACION EL FARO DE GUACARI' => 'ESTACION EL FARO DE GUACARI',
-            'ESTACION ESTRELLA DEL NORTE' => 'ESTACION ESTRELLA DEL NORTE',
-            'ESTACION ROSA LA TUPIA' => 'ESTACION ROSA LA TUPIA',
-            'ESTACION SAN ANTONIO' => 'ESTACION SAN ANTONIO',
-            'ESTACION BIOMAX CANDELARIA' => 'ESTACION BIOMAX CANDELARIA',
-            'ESTACION AMERICAS YUMBO' => 'ESTACION AMERICAS YUMBO',
-            'TEXACO ARROYOHONDO' => 'TEXACO ARROYOHONDO',
-            'CARRETERA' => 'CARRETERA',
-            'EDS BRIO LA COLOMBIANA CANDELARIA' => 'EDS BRIO LA COLOMBIANA CANDELARIA',
-            'EDS EL PALMAR' => 'EDS EL PALMAR',
-            'GIRALDO-ANTIOQUIA' => 'GIRALDO-ANTIOQUIA',
-            'CANECAS ITALCOL' => 'CANECAS ITALCOL',
-        ];
 
         return $form
             ->schema([
@@ -71,18 +53,50 @@ class EquipmentMachineryFuelResource extends Resource
                     ->label('Fecha')
                     ->required(),
                 Forms\Components\TextInput::make('acpm')
-                    ->label('ACPM')
+                    ->label('ACPM (gal.)')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('price_acpm')
+                    ->label('Precio ACPM')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('horom_tanq')
                     ->label('Horometro Tanqueo')
                     ->required()
                     ->numeric(),
-                Select::make('source')->label('Seleccionar una fuente')
-                    ->native(false)
+                Select::make('source')
+                    ->label('Fuente')
+                    ->preload()
                     ->searchable()
-                    ->options($sources)
-                    ->required(),
+                    ->relationship(name: 'source', titleAttribute: 'name')
+                    ->native(false)
+                    ->createOptionForm([
+                        Toggle::make('is_equipment')
+                            ->live()
+                            ->label('Es un equipo?'),
+                        Select::make('equipment_machinery_id')->label('Seleccionar el equipo')
+                            ->native(false)
+                            ->reactive()
+                            ->searchable()
+                            ->afterStateUpdated(function (Set $set, $state) {
+                                $set('name', EquipmentMachinery::find($state)->name);
+                            })
+                            ->options(function () {
+                                return EquipmentMachinery::query()->pluck('name', 'id');
+                            })
+                            ->visible(function ($get): ?bool {
+                                return $get('is_equipment');
+                            })
+                            ->required(),
+                        TextInput::make('name')
+                            ->label('Nombre de la fuente')
+                            ->required(),
+                    ])->columns(1)
+                    ->createOptionAction(function (Action $action){
+                        return $action
+                            ->modalHeading('Añadir Cuenta')
+                            ->modalWidth('sm');
+                    }),
                 Forms\Components\TextInput::make('consecutive_ing')
                     ->maxLength(191),
                 Forms\Components\FileUpload::make('file_img')->label('Evidencia')
@@ -113,7 +127,7 @@ class EquipmentMachineryFuelResource extends Resource
                     ->label('Horm Tanq')
                 ->numeric() 
                     ->sortable(),
-                Tables\Columns\TextColumn::make('source')
+                Tables\Columns\TextColumn::make('source.name')
                     ->label('Fuente')
                     ->searchable(),
             ])
