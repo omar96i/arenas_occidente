@@ -20,7 +20,7 @@
 
     </div>
     <div class="grid grid-cols-1 gap-4 mt-4" v-if="loading">
-        <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5">
+        <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md my-5">
             <table class="w-full border-collapse bg-gray-50 text-left text-sm text-gray-500">
                 <thead class="bg-gray-50">
                     <tr>
@@ -34,9 +34,9 @@
                 <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                     <tr class="hover:bg-gray-50 border borde" v-for="(item, index) in equipments_fuels" :key="index">
                         <td class="px-6 py-4">{{item.name}}</td>
-                        <td class="px-6 py-4">{{item.received}}</td>
-                        <td class="px-6 py-4">{{item.gave ? item.gave : '--' }}</td>
-                        <td class="px-6 py-4">{{item.gave ? item.gave - item.received : '--' }}</td>
+                        <td class="px-6 py-4">{{item.fuel_data[0]?.fuel_total || '--'}}</td>
+                        <td class="px-6 py-4">{{item.fuel_data[0]?.gave || '--' }}</td>
+                        <td class="px-6 py-4">{{(item.fuel_data[0]?.fuel_total || 0) - (item.fuel_data[0]?.gave || 0)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -44,8 +44,6 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
-
 export default {
     components: {
 

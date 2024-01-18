@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <x-filament::section>
         <div id="app">
-            <equipment-fuel></equipment-fuel>
+            <reports :entities="{{$entities}}" :segments="{{$segments}}"></reports>
         </div>
     </x-filament::section>
 

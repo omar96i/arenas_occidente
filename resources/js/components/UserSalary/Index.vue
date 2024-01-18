@@ -25,7 +25,7 @@
         </div>
     </section>
     <section class="mt-8">
-        <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5">
+        <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md my-5">
             <table class="w-full border-collapse bg-gray-50 text-left text-sm text-gray-500">
                 <thead class="bg-gray-50">
                     <tr>

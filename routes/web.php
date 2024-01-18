@@ -37,8 +37,8 @@ Route::get('/entity/getShift/{shift}', [App\Http\Controllers\EntityController::c
 Route::get('/entity/shift/delete/{shift}', [App\Http\Controllers\EntityController::class, 'deleteShift'])->name('entity.delete.shift');
 
 Route::get('/equipmentMachinary/get', [App\Http\Controllers\EquipmentMachinaryController::class, 'get'])->name('equipment.machinary.get');
-
 Route::get('/equipmentMachinary/fuels/get/{month}/{year}', [App\Http\Controllers\EquipmentMachinaryController::class, 'getFuels'])->name('equipment.machinary.get.fuels');
+Route::get('/equipmentMachinary/performance/get/{month}/{year}', [App\Http\Controllers\EquipmentMachinaryController::class, 'getPerformance'])->name('equipment.machinary.get.performance');
 
 Route::get('/getUsersSalary/{segment}', [UserSalaryController::class, 'getUsersSalary']);
 Route::post('/maintenance/scheduling/store', [App\Http\Controllers\MaintenanceSchedulingController::class, 'store'])->name('maintenance.scheduling.store');
