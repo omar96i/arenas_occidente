@@ -63,8 +63,8 @@
 </style>
 <script>
     import FullCalendar from '@fullcalendar/vue3'
-    import dayGridPlugin from '@fullcalendar/daygrid'
-    import interactionPlugin from '@fullcalendar/interaction'
+    import interactionPlugin from '@fullcalendar/interaction'; // for selectable
+    import dayGridPlugin from '@fullcalendar/daygrid'; // for dayGridMonth view
     import esLocale from "@fullcalendar/core/locales/es";
 
     export default {
@@ -78,12 +78,16 @@
                     initialView: 'dayGridMonth',
                     dateClick: this.handleDateClick,
                     locale: esLocale,
+                    selectable: true,
                     events: [
                         // Quiero obtener el valor de cuando se le de click a uno de los eventos de aqui
                     ],
                     eventClick: (info) => {
                         this.clickEventAction(info.event.id)
                     },
+                    select: function(info) {
+                        alert('selected ' + info.startStr + ' to ' + info.endStr);
+                    }
                 },
                 loading: false,
                 selected_entity : 0,
