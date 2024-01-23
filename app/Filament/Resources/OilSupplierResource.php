@@ -6,6 +6,7 @@ use App\Filament\Resources\OilSupplierResource\Pages;
 use App\Filament\Resources\OilSupplierResource\RelationManagers;
 use App\Models\OilSupplier;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -60,17 +61,10 @@ class OilSupplierResource extends Resource
                             ->numeric()
                             ->prefix('$'),
                     ])->columns(2),
-                Section::make('Otros')
-                    ->description('Precios por tambores')
+                Section::make('Evidencias')
                     ->schema([
-                        Forms\Components\TextInput::make('stock_2')->label('Tambor')
-                            ->placeholder('Ingresa el tambor')
-                            ->numeric(),
-                        Forms\Components\TextInput::make('price_2')->label('Precio')
-                            ->placeholder('Ingresa el precio')
-                            ->numeric()
-                            ->prefix('$'),
-                    ])->columns(2),
+                        FileUpload::make('file')->label('Subir evidencia')
+                    ])->columns(1),
             ]);
     }
 
@@ -78,6 +72,9 @@ class OilSupplierResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('oil.code')->label('Codigo de aceite')
                     ->numeric()
                     ->sortable(),
@@ -90,12 +87,6 @@ class OilSupplierResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')->label('Precio')
-                    ->money('COP')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('stock_2')->label('Tambores')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('price_2')->label('Precio')
                     ->money('COP')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Creado en la fecha')

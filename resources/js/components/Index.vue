@@ -157,6 +157,15 @@
                     if (eventIndex !== -1) {
                         this.calendarOptions.events[eventIndex].date = date;
                     }
+                    let segmentIndex = this.find_entity.segments.findIndex(objeto => objeto.id === this.selected_segment);
+                    console.log(segmentIndex)
+                    console.log(id)
+                    let shiftIndex = this.find_entity.segments[segmentIndex].shifts.findIndex(shift => shift.id === parseInt(id));
+                    console.log(shiftIndex)
+                    if (shiftIndex !== -1) {
+                        console.log("entro aqui")
+                        this.find_entity.segments[segmentIndex].shifts[shiftIndex].date = date;
+                    }
                 }).catch(error=>{
                     console.log(error.response)
                 })
@@ -270,12 +279,15 @@
             setEmployee(){
                 let index = this.find_entity.segments.findIndex(objeto => objeto.id === this.selected_segment)
                 let segment = this.find_entity.segments[index]
-                this.calendarOptions.events = segment.shifts
-                .filter(shift => shift.user.id === this.selected_employee)
-                .map(shift => ({
-                    title: shift.user.full_name + " - " + shift.measure.name,
+                let sortedShifts = segment.shifts
+                    .filter(shift => this.selected_employee == 0 || shift.user.id === this.selected_employee)
+                    .sort((a, b) => a.schedule.localeCompare(b.schedule))
+
+                this.calendarOptions.events = sortedShifts.map(shift => ({
+                    title: shift.user.full_name + " - " + shift.schedule,
                     date: shift.date,
                     id: shift.id,
+                    color: this.getEventColor(shift.schedule)
                 }));
             },
 

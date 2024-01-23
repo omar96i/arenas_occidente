@@ -12,7 +12,9 @@ class EquipmentMachinaryController extends Controller
     public function get(){
         return response()->json([
             'status' => true,
-            'equipments' => EquipmentMachinery::with('schedules')->get()
+            'equipments' => EquipmentMachinery::with(['schedules' => function($query){
+                $query->where('status', '!=', 'COMPLETO');
+            }])->get()
         ]);
     }
 
@@ -45,7 +47,7 @@ class EquipmentMachinaryController extends Controller
         $equipments_fuels = EquipmentMachinery::with(['fuels' => function ($query) use ($month, $year) {
             $query->whereMonth('date', $month)->whereYear('date', $year);
         }])->get()->toArray();
-        
+
         foreach ($equipments_fuels as &$equipment) {
             $received = 0;
 
@@ -57,11 +59,11 @@ class EquipmentMachinaryController extends Controller
 
                     if ($foundIndex !== false) {
                         $foundObject = &$equipments_fuels[$foundIndex];
-        
+
                         if (!isset($foundObject['gave'])) {
                             $foundObject['gave'] = 0;
                         }
-        
+
                         $foundObject['gave'] += $fuels['acpm'];
                     }
                 }

@@ -16,8 +16,7 @@ class OilSupplier extends Model
         'mark',
         'stock',
         'price',
-        'stock_2',
-        'price_2',
+        'file',
     ];
     // Relations
     /**
@@ -41,25 +40,32 @@ class OilSupplier extends Model
     }
 
 
-    // public static function boot()
-    // {
-    //     parent::boot();
+    public static function boot()
+    {
+        parent::boot();
 
-    //     static::saved(function ($model) {
-    //         $stock = $model->stock;
-    //         $stock_2 = $model->stock_2;
+        static::saved(function ($model) {
+            $stock = $model->stock;
+            $oil = Oil::where('id', $model->oil_id)->first();
+            $oil->increment('stock', $stock);
+            $oil->save();
+        });
 
-    //         $oil = Oil::where('id', $model->oil_id)->first();
+        static::updating(function ($model) {
+            $original = $model->getOriginal();
 
-    //         if ($stock !== null && $stock > 0) {
-    //             $oil->increment('stock', $stock);
-    //         }
+            $oil = Oil::where('id', $original['oil_id'])->first();
+            $oil->decrement('stock', $original['stock']);
+            $oil->save();
 
-    //         if ($stock_2 !== null && $stock_2 > 0) {
-    //             $oil->increment('stock', $stock_2 * 50);
-    //         }
+            $oil->increment('stock', $model->stock);
+            $oil->save();
+        });
 
-    //         $oil->save();
-    //     });
-    // }
+        static::deleting(function ($model) {
+            $oil = Oil::where('id', $model->oil_id)->first();
+            $oil->decrement('stock', $model->stock);
+            $oil->save();
+        });
+    }
 }

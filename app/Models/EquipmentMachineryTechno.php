@@ -16,6 +16,7 @@ class EquipmentMachineryTechno extends Model
         'date_tuition',
         'last_revision',
         'date_revision',
+        'file',
         'status',
     ];
 

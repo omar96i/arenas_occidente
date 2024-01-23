@@ -1542,6 +1542,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1559,6 +1560,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1576,6 +1578,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1593,6 +1597,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1610,6 +1616,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1627,6 +1635,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1644,6 +1654,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1661,6 +1673,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1678,6 +1692,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1695,6 +1711,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),

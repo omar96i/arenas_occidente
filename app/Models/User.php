@@ -98,4 +98,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(EquipmentMachineryLabor::class, 'user_id');
     }
+
+    /**
+     * Get all of the maintenance_schedulings for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function maintenance_schedulings(): HasMany
+    {
+        return $this->hasMany(MaintenanceScheduling::class);
+    }
 }

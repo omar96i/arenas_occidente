@@ -24,6 +24,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('maintenance_schedulings', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('maintenance_schedulings', function (Blueprint $table) {
             $table->dropColumn('user_id');
             $table->dropColumn('mileage');
             $table->dropColumn('hourometer');

@@ -16,6 +16,7 @@ class EquipmentMachinerySoat extends Model
         'beneficiary',
         'validity',
         'status',
+        'file'
     ];
 
     /**

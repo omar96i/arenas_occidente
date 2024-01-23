@@ -45,6 +45,7 @@ class EquipmentMachineryOwnerResource extends Resource
                 Forms\Components\TextInput::make('tuition')->label('Matricula')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
             ]);
     }
 
@@ -52,6 +53,9 @@ class EquipmentMachineryOwnerResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),

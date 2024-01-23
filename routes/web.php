@@ -26,6 +26,7 @@ Route::get('/test/{record}', function () {
 })->name('test');
 
 Route::get('/test/scraping', [App\Http\Controllers\ScrapingController::class, 'index']);
+Route::get('/user/get', [App\Http\Controllers\UserController::class, 'get'])->name('user.get');
 
 
 Route::get('/entity/get', [App\Http\Controllers\EntityController::class, 'getEntities'])->name('entity.get');
@@ -46,5 +47,7 @@ Route::post('/maintenance/scheduling/store', [App\Http\Controllers\MaintenanceSc
 Route::post('/maintenance/scheduling/update/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'update'])->name('maintenance.scheduling.update');
 Route::get('/maintenance/scheduling/get/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'get'])->name('maintenance.scheduling.get');
 Route::get('/maintenance/scheduling/delete/{scheduling}', [App\Http\Controllers\MaintenanceSchedulingController::class, 'delete'])->name('maintenance.scheduling.delete');
+Route::get('/maintenance/scheduling/actual', [App\Http\Controllers\MaintenanceSchedulingController::class, 'getToday'])->name('maintenance.scheduling.get.today');
+
 
 
