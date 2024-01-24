@@ -103,24 +103,4 @@ class EquipmentMachinery extends Model
         return $this->hasMany(EMInspectionControl::class, 'equipment_machinery_id');
     }
 
-    /**
-     * Get all of the labors for the EquipmentMachinery
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function labors(): HasMany
-    {
-        return $this->hasMany(EquipmentMachineryLabor::class, 'equipment_machinery_id');
-    }
-
-    /**
-     * Get all of the fuels for the EquipmentMachinery
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function fuels(): HasMany
-    {
-        return $this->hasMany(EquipmentMachineryFuel::class, 'equipment_machinery_id');
-    }
-
 }
