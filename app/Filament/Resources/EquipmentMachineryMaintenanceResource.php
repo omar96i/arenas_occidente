@@ -8,6 +8,7 @@ use App\Models\EquipmentMachinery;
 use App\Models\EquipmentMachineryMaintenance;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
@@ -105,6 +106,11 @@ class EquipmentMachineryMaintenanceResource extends Resource
                                 TextInput::make('driver')
                                     ->label('Conductor'),
                         ])->columns(3),
+                        FileUpload::make('file_evidence')->label('Evidencia')
+                            ->image()
+                            ->multiple()
+                            ->imageEditor()
+                            ->columnSpan(3),
                 ])->columns(3),
                 Section::make('DESCRIPCIÓN DE MANTENIMIENTO PREVENTIVO')
                 ->schema([
@@ -128,6 +134,33 @@ class EquipmentMachineryMaintenanceResource extends Resource
                         ->columnSpan('full'),
                 ])
                 ->collapsible(),
+                Section::make('REPUESTOS')
+                ->schema([
+                    TextInput::make('invoice_number')
+                        ->label('Numero de Factura'),
+                    TextInput::make('labor_value')
+                        ->label('Valor Mano de Obra'),
+                    Repeater::make('parts_amount_value')
+                        ->label('Detalles de Repuestos')
+                        ->schema([
+                            TextInput::make('part')
+                                ->label('Repuesto')
+                                ->required(),
+                            TextInput::make('amount')
+                                ->label('Cantidad')
+                                ->numeric()
+                                ->required(),
+                            TextInput::make('value')
+                                ->label('Precio')
+                                ->required(),
+                        ])
+                        ->defaultItems(1)
+                        ->addActionLabel('Nuevo Repuesto')
+                        ->columns(3)
+                        ->columnSpan('full'),
+                ])
+                ->hidden(fn () => auth()->user()->position !== 'administracion') //validacion de edicion
+                ->columns(2),
                 Section::make('OTROS TRABAJOS')
                 ->schema([
                     TextInput::make('other_activities')

@@ -41,7 +41,7 @@
                         <td class="px-6 py-4">{{select_entity.name}}</td>
                         <td class="px-6 py-4">{{select_segment.name}} </td>
                         <td class="px-6 py-4">{{item.name}}</td>
-                        <td class="px-6 py-4">{{formatMoney(item.contract_active.salary)}} </td>
+                        <td class="px-6 py-4">{{formatMoney(item.contract_active?.salary || 'Sin contrato activo')}} </td>
                         <td class="px-6 py-4">{{formatMoney(item.total_salary)}} </td>
                         <td class="px-6 py-4">
                             <div class="flex justify-end gap-4">
@@ -206,6 +206,7 @@ export default {
             isModalOpen: false,
             data_user_modal: {},
             activeTab: 'base',
+            alert: false,
         }
     },
     methods: {
@@ -228,6 +229,19 @@ export default {
         },
         calculateSalary() {
             this.users_salary.forEach(user => {
+                if (!user.contract_active?.salary) {
+                    user['value_day'] = 'Sin contrato activo';
+                    user['value_extra_day'] = 'Sin contrato activo';
+                    user['value_night'] = 'Sin contrato activo';
+                    user['value_extra_night'] = 'Sin contrato activo';
+                    user['value_day_weekend'] = 'Sin contrato activo';
+                    user['value_extra_day_weekend'] = 'Sin contrato activo';
+                    user['value_night_weekend'] = 'Sin contrato activo';
+                    user['value_extra_night_weekend'] = 'Sin contrato activo';
+
+                    user['total_salary'] = 'Sin contrato activo';
+                    return;
+                }
                 const hourValue = user.contract_active.salary / 235.66;
                 let totalSalary = 0;
                 let timeDay = 0,
@@ -240,25 +254,25 @@ export default {
                     timeExtraNightWeekend = 0;
 
                 user.shifts.forEach(shift => {
-                    switch (shift.measure.description) {
-                        case 'Primer turno: de 6am-2pm':
+                    switch (shift.schedule) {
+                        case '1':
                             timeDay += 7.83;
                             timeExtraDay += 0.17;
                             break;
-                        case 'Segundo turno: de 2pm-10pm':
+                        case '2':
                             timeDay += 7;
                             timeNight += 0.83;
                             timeExtraNight += 0.17;
                             break;
-                        case 'Tercer turno: de 10pm-6am':
+                        case '3':
                             timeNight += 7.83;
                             timeExtraNight += 0.17;
                             break;
-                        case 'Turno día fin de semana: de 6am-6pm':
+                        case 'D':
                             timeDayWeekend += 7.83;
                             timeExtraDayWeekend += 4.17;
                             break;
-                        case 'Turno noche fin de semana: de 6pm-6am':
+                        case 'N':
                             timeDayWeekend += 3;
                             timeNightWeekend += 4.83;
                             timeExtraNightWeekend += 4.17;
@@ -275,12 +289,13 @@ export default {
                 user['value_night_weekend'] = (timeNightWeekend * (hourValue * 2.1));
                 user['value_extra_night_weekend'] = (timeExtraNightWeekend * (hourValue * 2.5));
 
-                user['total_salary'] = (user['value_day'] + user['value_extra_day'] + user['value_night'] +
-                    user['value_extra_night'] + user['value_day_weekend'] + user['value_extra_day_weekend'] +
-                    user['value_night_weekend'] + user['value_extra_night_weekend']).toFixed(2);
+                user['total_salary'] = (user['value_day'] + user['value_extra_day'] + user['value_night'] + user['value_extra_night'] + user['value_day_weekend'] + user['value_extra_day_weekend'] + user['value_night_weekend'] + user['value_extra_night_weekend']).toFixed(2);
             });
         },
         formatMoney(value){
+            if (value === 'Sin contrato activo') {
+                return "Sin contrato activo";
+            }
             if (isNaN(value)) {
                 return "¡Error! Valor no numérico.";
             }

@@ -14,7 +14,7 @@ class UserSalaryController extends Controller
         $users_salary = User::whereHas('shifts', function ($query) use($segment){
             $query->where('entity_segment_id', $segment->id);
         })->with(['contract_active', 'shifts' => function($query) use($segment){
-            $query->with('measure')->where('entity_segment_id', $segment->id);
+            $query->where('entity_segment_id', $segment->id);
         }])->get();
         return response()->json(['users_salary'=> $users_salary]);
     }

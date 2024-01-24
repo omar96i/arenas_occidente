@@ -12,6 +12,7 @@ class EquipmentMachineryMaintenance extends Model
 
     protected $casts = [
         'activities' => 'array',
+        'parts_amount_value' => 'array',
     ];
 
     protected $fillable = [
@@ -30,6 +31,10 @@ class EquipmentMachineryMaintenance extends Model
         'description_corrective_maintenance',
         'elaborated_signature',
         'revised_signature',
+        'file_evidence',
+        'invoice_number',
+        'parts_amount_value',
+        'labor_value',
     ];
 
     public function equipment(): BelongsTo

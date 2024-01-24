@@ -5,7 +5,11 @@
             <label for="filter1" class="block text-sm font-medium text-gray-700"></label>
             <select id="filter1" v-model="selected_report" @change="setReport()" name="filter1" class="input-filament mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="" disabled selected>Selecciona un informe</option>
-                <option v-for="(report, index) in reports" :value="report.value">{{ report.name }}</option>
+                <option value="resumen_salarios">Resumen de Salarios</option>
+                <option value="combustible_equipos" disabled>Combustible por Equipos</option>
+                <option value="redimiento_equipos" disabled>Redimiento por Equipos</option>
+                <option value="detalle_contratos" disabled>Detalle por Contratos</option>
+                <!-- <option v-for="(report, index) in reports" :value="report.value">{{ report.name }}</option> -->
             </select>
         </div>
     </div>
