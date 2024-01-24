@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\EquipmentMachineryResource\RelationManagers;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,9 +24,35 @@ class SchedulesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\DatePicker::make('date')->label('Fecha de mantenimiento')
+                Forms\Components\DatePicker::make('date')->label('Fecha de mantenimiento')->live()
+                    ->afterStateUpdated(function (Set $set, $state){
+                        if ($state) {
+                            $selectedDate = Carbon::parse($state);
+                            $today = Carbon::now();
+                            $sevenDaysFromNow = $today->copy()->addDays(7);
+
+                            if ($selectedDate->lt($today)) {
+                                $set('status', 'PASADO');
+                            } elseif ($selectedDate->between($today, $sevenDaysFromNow)) {
+                                $set('status', 'PROXIMO');
+                            } else {
+                                $set('status', 'BUEN ESTADO');
+                            }
+                        }
+                    })
                     ->required(),
+                Forms\Components\Select::make('user_id')->label('Empleado')
+                        ->relationship('user', 'full_name')
+                        ->placeholder('Selecciona un empleado')
+                        ->required(),
                 Forms\Components\Textarea::make('description')->label('descripción')
+                    ->required(),
+                Forms\Components\TextInput::make('mileage')->label('Kilometraje')
+                    ->required(),
+                Forms\Components\TextInput::make('hourometer')->label('Horometro')
+                    ->required(),
+                Forms\Components\TextInput::make('status')->label('Estado')
+                    ->readonly()
                     ->required(),
             ]);
     }
@@ -34,20 +62,25 @@ class SchedulesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('date')
             ->columns([
+                Tables\Columns\TextColumn::make('user.full_name')->label('Empleado'),
                 Tables\Columns\TextColumn::make('date')->label('Fecha de mantenimiento'),
                 Tables\Columns\TextColumn::make('description')->label('Descripción'),
+                Tables\Columns\TextColumn::make('mileage')->label('Kilometraje'),
+                Tables\Columns\TextColumn::make('hourometer')->label('Horometro'),
+
                 Tables\Columns\IconColumn::make('status')->label('Estado')
                 ->icon(fn (string $state): string => match ($state) {
-                    'cancel' => 'heroicon-o-exclamation-circle',
-                    'pending' => 'heroicon-o-clock',
-                    'completed' => 'heroicon-o-check-circle',
+                    'PASADO' => 'heroicon-o-exclamation-circle',
+                    'PROXIMO' => 'heroicon-o-clock',
+                    'BUEN ESTADO' => 'heroicon-o-check-circle',
                 })
                 ->color(fn (string $state): string => match ($state) {
-                    'cancel' => 'danger',
-                    'pending' => 'warning',
-                    'completed' => 'success',
+                    'PASADO' => 'danger',
+                    'PROXIMO' => 'warning',
+                    'BUEN ESTADO' => 'success',
                     default => 'gray',
                 }),
+
 
             ])
             ->filters([

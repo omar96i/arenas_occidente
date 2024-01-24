@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-cols-1 gap-4 mt-4" v-if="loading">
         <div>
-            <FullCalendar :options="calendarOptions">
+            <FullCalendar class="my-calendar" :options="calendarOptions">
             </FullCalendar>
         </div>
     </div>
@@ -30,12 +30,38 @@
                                 <label for="name" class="block text-sm font-medium text-gray-700">Descripción</label>
                                 <input id="name" v-model="data.description" type="text" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
+                            <div class="w-full">
+                                <label for="filter3" class="block text-sm font-medium text-gray-700">Responsable</label>
+                                <select id="filter3" name="filter3" v-model="data.user_id" class="input-filament mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="0">Selecciona un empleado</option>
+                                    <option v-for="(user, index) in users" :value="user.id">{{ user.full_name }}</option>
+                                </select>
+                            </div>
+                            <div class="mt-3">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Kilometraje</label>
+                                <input id="name" v-model="data.mileage" type="text" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div class="mt-3">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Horometro</label>
+                                <input id="name" v-model="data.hourometer" type="text" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
                             <div class="w-full" v-if="error != ''">
                                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                                     <strong class="font-bold">Hubo un error! </strong>
                                     <span class="block sm:inline">  {{error}}</span>
                                 </div>
                             </div>
+                            <div class="w-full">
+                                <label for="filter3" class="block text-sm font-medium text-gray-700">Estado</label>
+                                <select id="filter3" name="filter3" v-model="data.status" class="input-filament mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="0">Selecciona un estado</option>
+                                    <option value="PASADO">PASADO</option>
+                                    <option value="PROXIMO">PROXIMO</option>
+                                    <option value="BUEN ESTADO">BUEN ESTADO</option>
+                                    <option value="COMPLETO">COMPLETO</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6" v-if="modalType == 'insert'">
@@ -50,6 +76,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h1 class="text-4xl mb-4">Programacion del dia</h1>
+        <div class="flex flex-wrap justify-around">
+            <a v-for="(schedule, index) in actual_schedulings" @click="clickEventAction(schedule.id)" href="#" class="block max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 w-full sm:w-1/2 md:w-1/4">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{schedule.equipment.name+" - "+schedule.equipment.register_number}}</h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">{{ schedule.user.full_name+" - "+schedule.date}}</p>
+            </a>
         </div>
     </div>
 </template>
@@ -87,16 +122,32 @@ export default {
             openModal : false,
             data : {
                 description : '',
-                date : ''
+                user_id : '0',
+                mileage : '',
+                hourometer : '',
+                status : '0'
+
             },
             error : '',
-            modalType : 'insert'
+            modalType : 'insert',
+            users : [],
+            actual_schedulings : []
         }
     },
     created(){
         this.getEquipment()
+        this.getUsers()
+        this.getActualRegisters()
     },
     methods:{
+        getActualRegisters(){
+            axios.get(`/maintenance/scheduling/actual`).then(res=>{
+                this.actual_schedulings = res.data.schedulings
+            }).catch(error=>{
+                console.log(error.response)
+            })
+        },
+
         getEquipment(aux = false){
             axios.get('/equipmentMachinary/get').then(res=>{
                 this.equipments = res.data.equipments
@@ -109,6 +160,14 @@ export default {
             })
         },
 
+
+        getUsers(){
+            axios.get(`/user/get`).then(res=>{
+                this.users = res.data.users
+            }).catch(error=>{
+                console.log(error.response)
+            })
+        },
 
 
         setEquipment(){
@@ -152,7 +211,11 @@ export default {
                 {
                     description : this.data.description,
                     date : this.selected_date,
-                    equipment_machinery_id : this.selected_equipment
+                    equipment_machinery_id : this.selected_equipment,
+                    user_id : this.data.user_id,
+                    mileage : this.data.mileage,
+                    hourometer : this.data.hourometer,
+                    status : this.data.status
                 }
 
             let route = (this.modalType == 'edit') ? `/maintenance/scheduling/update/${this.data.id}` : `/maintenance/scheduling/store`
@@ -165,6 +228,7 @@ export default {
                 console.log(error.response)
             }).finally(()=>{
                 this.resetData()
+                this.getActualRegisters()
             })
         },
 
@@ -179,7 +243,14 @@ export default {
         },
 
         resetData(){
-            this.data.description = ''
+            this.data = {
+                description : '',
+                user_id : '0',
+                mileage : '',
+                hourometer : '',
+                status : '0'
+
+            },
             this.selected_date = ''
             this.modalType = 'insert'
             this.openModal = false
@@ -249,5 +320,8 @@ export default {
     .input-filament:focus {
         border-color: #f29d11 !important; /* Color del borde al enfocar el input */
         box-shadow: 0 0 0 3px rgba(242, 157, 17, 0.5) !important; /* Sombra al enfocar el input */
+    }
+    .fc-view-harness{
+        max-height: 650px !important;
     }
 </style>

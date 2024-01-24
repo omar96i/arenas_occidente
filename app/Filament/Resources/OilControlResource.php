@@ -8,6 +8,8 @@ use App\Models\OilControl;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -48,32 +50,61 @@ class OilControlResource extends Resource
                         Forms\Components\Select::make('equipment_machinery_id')->label('Equipo o maquinaria')
                             ->relationship('equipment_machinery', 'name')
                             ->required(),
-                        Forms\Components\Select::make('month')->label('Mes')
+                        Forms\Components\Select::make('area')->label('Selecciona un area')
                             ->options([
-                                'enero' => 'Enero',
-                                'Febrero' => 'Febrero',
-                                'Marzo' => 'Marzo',
-                                'Abril' => 'Abril',
-                                'Mayo' => 'Mayo',
-                                'Junio' => 'Junio',
-                                'Julio' => 'Julio',
-                                'Agosto' => 'Agosto',
-                                'Septiembre' => 'Septiembre',
-                                'Octubre' => 'Octubre',
-                                'Noviembre' => 'Noviembre',
-                                'Diciembre' => 'Diciembre',
+                                'Ceniza' => 'Ceniza',
+                                'Cachaza' => 'Cachaza',
+                                'Compost' => 'Compost',
+                                'Carbon' => 'Carbon',
+                                'Calderas' => 'Calderas',
+                                'Bagzo' => 'Bagzo',
+                                'Botadero' => 'Botadero',
+                                'Otro' => 'Otro'
                             ])
                             ->required(),
-                            Forms\Components\TextInput::make('year')->label('Año')
-                            ->maxLength(191),
+                        Forms\Components\DatePicker::make('date')->label('Fecha')
+                            ->required(),
                     ])->columns(3),
-                Section::make('Cantidad y costos')
-                    ->description('Información de la cantidad y costos')
+                Section::make('Cantidad')
+                    ->description('Información de la cantidad')
                     ->schema([
-                        Forms\Components\TextInput::make('amount')->label('Cantidad')
-                            ->numeric(),
-                        Forms\Components\TextInput::make('cost_per_gallon')->label('Costo por galon')
-                            ->numeric(),
+                        Forms\Components\Select::make('input1')->label('Galones')->live()
+                            ->options(function(){
+                                $options = [];
+                                for ($i=0; $i < 1000; $i++) {
+                                    $options[($i+1)] = ($i+1)." Galones";
+                                }
+                                return $options;
+                            })
+                            ->afterStateUpdated(function (Get $get, Set $set, $state){
+                                if ($state) {
+                                    $number2 = $get('input2');
+                                    if($number2){
+                                        $set('amount', floatval($state)+floatval($number2));
+                                    }else{
+                                        $set('amount', intval($state));
+                                    }
+                                }
+                            }),
+                        Forms\Components\Select::make('input2')->label('Cuartos')->live()
+                            ->options([
+                                '0.25' => '1/4',
+                                '0.50' => '2/4',
+                                '0.75' => '3/4',
+                            ])
+                            ->afterStateUpdated(function (Get $get, Set $set, $state){
+                                if ($state) {
+                                    $number2 = $get('input1');
+                                    if($number2){
+                                        $set('amount', floatval($state)+floatval($number2));
+                                    }else{
+                                        $set('amount', floatval($state));
+                                    }
+                                }
+                            }),
+                        Forms\Components\TextInput::make('amount')->label('Cantidad Total')
+                            ->numeric()
+                            ->readonly(),
                     ])->columns(2),
             ]);
     }
@@ -82,27 +113,18 @@ class OilControlResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')->label('Solicitante')
+                Tables\Columns\TextColumn::make('applicant.full_name')->label('Solicitante')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('oil.id')->label('Aceite')
+                Tables\Columns\TextColumn::make('oil.code')->label('Aceite')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('month')->label('Mes')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('year')->label('Año')
+                Tables\Columns\TextColumn::make('date')->label('Fecha')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('amount')->label('Cantidad')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('cost_per_gallon')->label('Precio por galon')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('cost_total')->label('Costo total')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Fecha de creacion')
                     ->dateTime()

@@ -17,6 +17,7 @@ class EquipmentMachinerySure extends Model
         'beneficiary',
         'validity',
         'status',
+        'file'
     ];
 
     /**

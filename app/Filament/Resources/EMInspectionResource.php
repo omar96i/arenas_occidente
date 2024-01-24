@@ -19,6 +19,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DatePicker;
+
 
 
 class EMInspectionResource extends Resource
@@ -116,7 +119,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Documentos conductor')
                         ->schema([
@@ -171,7 +174,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('SST')
                         ->schema([
@@ -254,9 +257,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    DatePicker::make('observations')->label('Fecha de vencimiento'),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -396,7 +397,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
                     Section::make('Fotos')
                         ->schema([
                             Repeater::make('frontal')->label('Frontal')
@@ -410,9 +411,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -427,9 +426,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -444,9 +441,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -461,9 +456,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -478,9 +471,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -495,9 +486,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -512,9 +501,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -529,13 +516,11 @@ class EMInspectionResource extends Resource
                                     Textarea::make('why_not')->label('Por que no cumple?')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
-                                    Textarea::make('observations')->label('Observación')
-                                        ->maxLength(65535)
-                                        ->columnSpanFull(),
+                                    FileUpload::make('observations')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
                     Section::make('Luces')
                         ->schema([
                             Repeater::make('streetlights')->label('Farolas')
@@ -640,7 +625,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
                     Section::make('Otros')
                         ->schema([
                             Repeater::make('reverse_alarm')->label('Alarma de reversa')
@@ -745,7 +730,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Frenos')
                         ->schema([
@@ -817,7 +802,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Motor')
                         ->schema([
@@ -1025,7 +1010,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Aceites')
                         ->schema([
@@ -1165,7 +1150,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Filtros')
                         ->schema([
@@ -1220,7 +1205,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Accionamiento')
                         ->schema([
@@ -1344,7 +1329,7 @@ class EMInspectionResource extends Resource
                                 ->addable(false)
                                 ->deletable(false),
 
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Revisión interior')
                         ->schema([
@@ -1484,7 +1469,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Revisión externa')
                         ->schema([
@@ -1539,7 +1524,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Llantas')
                         ->schema([
@@ -1557,6 +1542,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1574,6 +1560,7 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1591,6 +1578,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1608,6 +1597,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1625,6 +1616,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1642,6 +1635,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1659,6 +1654,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1676,6 +1673,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1693,6 +1692,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1710,6 +1711,8 @@ class EMInspectionResource extends Resource
                                     Textarea::make('observations')->label('Observación')
                                         ->maxLength(65535)
                                         ->columnSpanFull(),
+                                    FileUpload::make('evidence')->label('Subir evidencia')->maxSize(1024),
+
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
@@ -1781,7 +1784,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Section::make('Vidrios')
                         ->schema([
@@ -1819,7 +1822,7 @@ class EMInspectionResource extends Resource
                                 ])
                                 ->addable(false)
                                 ->deletable(false),
-                        ])->columns(3),
+                        ])->columns(3)->collapsed(),
 
                     Forms\Components\Textarea::make('observations')
                         ->maxLength(65535)

@@ -14,11 +14,9 @@ class OilControl extends Model
         'user_id',
         'oil_id',
         'equipment_machinery_id',
-        'month',
-        'year',
+        'date',
+        'area',
         'amount',
-        'cost_per_gallon',
-        'cost_total',
     ];
 
     /**
@@ -51,16 +49,38 @@ class OilControl extends Model
         return $this->belongsTo(EquipmentMachinery::class, 'equipment_machinery_id');
     }
 
-    // Mutadors
-    public function setAmountAttribute($value)
+    public static function boot()
     {
-        $this->attributes['amount'] = $value;
-        $this->attributes['cost_total'] = $value * $this->cost_per_gallon;
+        parent::boot();
+
+        static::saved(function ($model) {
+            // Incrementar el stock al crear un registro de control
+            $amount = $model->amount;
+            $oil = Oil::where('id', $model->oil_id)->first();
+            $oil->decrement('stock', $amount);
+            $oil->save();
+        });
+
+        static::updating(function ($model) {
+            // Obtén el modelo original antes de la actualización
+            $original = $model->getOriginal();
+
+            // Incrementa el valor original antes de aplicar la nueva disminución
+            $oil = Oil::where('id', $original['oil_id'])->first();
+            $oil->increment('stock', $original['amount']);
+            $oil->save();
+
+            // Ahora decrementa con el nuevo valor
+            $oil->decrement('stock', $model->amount);
+            $oil->save();
+        });
+
+        static::deleting(function ($model) {
+            // Incrementa el valor cuando se elimina el registro
+            $oil = Oil::where('id', $model->oil_id)->first();
+            $oil->increment('stock', $model->amount);
+            $oil->save();
+        });
     }
 
-    public function setCostPerGallonAttribute($value)
-    {
-        $this->attributes['cost_per_gallon'] = $value;
-        $this->attributes['cost_total'] = $this->amount * $value;
-    }
 }

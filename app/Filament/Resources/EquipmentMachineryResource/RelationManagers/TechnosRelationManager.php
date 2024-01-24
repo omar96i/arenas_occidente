@@ -31,6 +31,7 @@ class TechnosRelationManager extends RelationManager
                 ->required(),
             Forms\Components\DatePicker::make('date_revision')->label('Fecha de revisión')
                 ->required(),
+            Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
             Forms\Components\Select::make('status')->label('Estado')
                 ->required()
                 ->options([
@@ -45,6 +46,9 @@ class TechnosRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('technomechanical')
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),

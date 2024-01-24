@@ -44,6 +44,7 @@ class EquipmentMachinerySoatResource extends Resource
                     ->maxLength(191),
                 Forms\Components\DatePicker::make('validity')->label('Vigencia')
                     ->required(),
+                Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
                 Forms\Components\Select::make('status')->label('Estado')
                     ->required()
                     ->options([
@@ -57,6 +58,9 @@ class EquipmentMachinerySoatResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),

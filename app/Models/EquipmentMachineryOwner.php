@@ -15,6 +15,7 @@ class EquipmentMachineryOwner extends Model
         'full_name',
         'nit',
         'tuition',
+        'file'
     ];
 
     /**

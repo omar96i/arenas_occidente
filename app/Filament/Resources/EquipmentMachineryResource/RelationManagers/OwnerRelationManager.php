@@ -31,6 +31,7 @@ class OwnerRelationManager extends RelationManager
                 Forms\Components\TextInput::make('tuition')->label('Matricula')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
             ]);
     }
 
@@ -39,6 +40,9 @@ class OwnerRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('full_name')
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),

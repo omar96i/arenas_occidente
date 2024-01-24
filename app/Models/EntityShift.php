@@ -18,7 +18,7 @@ class EntityShift extends Model
     protected $fillable = [
         'entity_segment_id',
         'user_id',
-        'entity_measure_id',
+        'schedule',
         'date',
     ];
 
@@ -42,13 +42,4 @@ class EntityShift extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the measure that owns the EntityShift
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function measure(): BelongsTo
-    {
-        return $this->belongsTo(EntityMeasure::class, 'entity_measure_id');
-    }
 }

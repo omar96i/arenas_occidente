@@ -11,11 +11,12 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -96,5 +97,15 @@ class User extends Authenticatable implements FilamentUser
     public function labors(): HasMany
     {
         return $this->hasMany(EquipmentMachineryLabor::class, 'user_id');
+    }
+
+    /**
+     * Get all of the maintenance_schedulings for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function maintenance_schedulings(): HasMany
+    {
+        return $this->hasMany(MaintenanceScheduling::class);
     }
 }

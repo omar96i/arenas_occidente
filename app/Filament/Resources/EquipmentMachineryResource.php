@@ -56,6 +56,9 @@ class EquipmentMachineryResource extends Resource
                                     ->options([
                                         'operativo' => 'Operativo',
                                         'alquilado' => 'Alquilado',
+                                        'inactivo' => 'Inactivo',
+                                        'para reparación' => 'Para reparación',
+                                        'varado en taller' => 'Varado en taller',
                                     ])->required(),
                             ]),
 

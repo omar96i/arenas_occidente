@@ -15,6 +15,9 @@ class MaintenanceScheduling extends Model
         'date',
         'description',
         'status',
+        'user_id',
+        'mileage',
+        'hourometer',
     ];
 
     /**
@@ -25,5 +28,15 @@ class MaintenanceScheduling extends Model
     public function equipment(): BelongsTo
     {
         return $this->belongsTo(EquipmentMachinery::class, 'equipment_machinery_id');
+    }
+
+    /**
+     * Get the user that owns the MaintenanceScheduling
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -5,19 +5,19 @@
     "src": "resources/css/app.css"
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-7098d8d8.css",
+    "file": "assets/theme-44c9b2fd.css",
     "isEntry": true,
     "src": "resources/css/filament/admin/theme.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-1803be31.css",
+    "file": "assets/app-7aa54b71.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-1803be31.css"
+      "assets/app-7aa54b71.css"
     ],
-    "file": "assets/app-49718860.js",
+    "file": "assets/app-75939f36.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

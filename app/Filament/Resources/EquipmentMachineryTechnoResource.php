@@ -6,6 +6,7 @@ use App\Filament\Resources\EquipmentMachineryTechnoResource\Pages;
 use App\Filament\Resources\EquipmentMachineryTechnoResource\RelationManagers;
 use App\Models\EquipmentMachineryTechno;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,6 +46,7 @@ class EquipmentMachineryTechnoResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('date_revision')->label('Fecha de revisión')
                     ->required(),
+                Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
                 Forms\Components\Select::make('status')->label('Estado')
                     ->required()
                     ->options([
@@ -58,6 +60,9 @@ class EquipmentMachineryTechnoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('file')->label('imagen')
+                    ->circular()
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('equipment_machinery.name')->label('Equipo o maquinaria')
                     ->numeric()
                     ->sortable(),
