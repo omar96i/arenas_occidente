@@ -45,6 +45,8 @@ class EMInspectionControlResource extends Resource
                             Forms\Components\Select::make('equipment_machinery_id')
                                 ->relationship('equipment_machinery', 'name')
                                 ->required()->label('Selecciona un equipo'),
+
+
                             Forms\Components\TextInput::make('frequency')->label('Frecuencia')
                                 ->required()
                                 ->numeric()
@@ -111,13 +113,9 @@ class EMInspectionControlResource extends Resource
                             Forms\Components\TextInput::make('unit')->label('Unidad')
                                 ->required()
                                 ->maxLength(191),
-                            Forms\Components\Select::make('status')->label('Estado')
-                                ->required()
-                                ->options([
-                                    'BUEN ESTADO' => 'BUEN ESTADO',
-                                    'PROXIMO' => 'PROXIMO',
-                                    'PASADO' => 'PASADO',
-                                ])->disabled(),
+                            Forms\Components\TextInput::make('status')->label('Estado')
+                                ->readonly()
+                                ->required(),
                         ])->columns(3),
                 ]),
 
@@ -142,12 +140,9 @@ class EMInspectionControlResource extends Resource
                                             }
                                         }
                                     }),
-                                Forms\Components\Select::make('extinguisher_status')->label('Estado del extintor')
-                                    ->options([
-                                        'BUEN ESTADO' => 'BUEN ESTADO',
-                                        'PROXIMO' => 'PROXIMO',
-                                        'PASADO' => 'PASADO',
-                                    ])->disabled(),
+                                Forms\Components\TextInput::make('extinguisher_status')->label('Estado del extintor')
+                                    ->required()
+                                    ->readonly(),
                             ])->columns(2),
                             // Forms\Components\DatePicker::make('extinguisher_expiration')
                             //     ->live(debounce: 500)

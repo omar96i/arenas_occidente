@@ -116,6 +116,7 @@ class EMInspection extends Model
 
     protected $fillable = [
         'equipment_machinery_id',
+        'date',
         'hourometer',
         'property_card',
         'soat',

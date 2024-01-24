@@ -49,6 +49,7 @@ class EMInspectionResource extends Resource
                     Forms\Components\Select::make('equipment_machinery_id')->label('Selecciona un equipo')
                     ->relationship('equipment_machinery', 'name')
                     ->required(),
+                    Forms\Components\DatePicker::make('date')->label('Fecha del registro'),
                     Section::make('Documentos vehiculo')
                         ->schema([
                             Repeater::make('hourometer')->label('Horometro o km Actual')
