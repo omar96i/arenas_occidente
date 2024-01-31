@@ -23,11 +23,11 @@ class FuelControlResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-4';
 
-    protected static ?string $navigationLabel = 'Control de Combustibles';
+    protected static ?string $navigationLabel = 'Combustibles';
 
-    protected static ?string $slug = 'control-combustibles';
+    protected static ?string $slug = 'combustibles';
 
-    protected static ?string $modelLabel = 'Control de Combustibles';
+    protected static ?string $modelLabel = 'Combustibles';
 
     protected static ?string $navigationGroup = 'Administración de Combustibles';
 
@@ -41,7 +41,7 @@ class FuelControlResource extends Resource
                     ->label('Nombre de la fuente')
                     ->required(),
                 TextInput::make('stock')
-                    ->label('Stock ACPM')
+                    ->label('Cantidad (gal.)')
                     ->numeric()
                     ->required()
                     ->default(0),
@@ -49,12 +49,7 @@ class FuelControlResource extends Resource
                     ->label('Tipo de Combustible')
                     ->required()
                     ->options(['ACPM' => 'ACPM', 'GASOLINA' => 'GASOLINA']),
-                Select::make('measure')
-                    ->label('Medida Gasolina')
-                    ->required()
-                    ->options(['GALONES' => 'GALONES', 'LITROS' => 'LITROS'])
-                    ->default('GALONES'),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -70,9 +65,6 @@ class FuelControlResource extends Resource
                     ->sortable(),
                 TextColumn::make('type')
                     ->label('Tipo Combustible')
-                    ->sortable(),
-                TextColumn::make('measure')
-                    ->label('Medida')
                     ->sortable(),
             ])
             ->filters([

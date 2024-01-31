@@ -8,9 +8,11 @@ use App\Models\FuelControl;
 use App\Models\FuelControlConsumption;
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,11 +28,11 @@ class FuelControlConsumptionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-right-circle';
 
-    protected static ?string $navigationLabel = 'Entrada de Combustible';
+    protected static ?string $navigationLabel = 'Salida de Combustible';
 
-    protected static ?string $slug = 'entrada-combustibles';
+    protected static ?string $slug = 'salida-combustibles';
 
-    protected static ?string $modelLabel = 'Entrada de Combustible';
+    protected static ?string $modelLabel = 'Salida de Combustible';
 
     protected static ?string $navigationGroup = 'Administración de Combustibles';
 
@@ -43,6 +45,29 @@ class FuelControlConsumptionResource extends Resource
                 DatePicker::make('date')
                     ->label('Fecha')
                     ->required(),
+                Toggle::make('is_external_source')
+                    ->label('Tiene fuente externa?')
+                    ->inline(false)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->live(),
+                Select::make('fuel_control_source_id')
+                    ->label('Origen')
+                    ->preload()
+                    ->searchable()
+                    ->relationship(name: 'origin', titleAttribute: 'name')
+                    ->native(false)
+                    ->createOptionForm([
+                        TextInput::make('name')
+                            ->label('Nombre de la fuente')
+                            ->required(),
+                    ])->columns(1)
+                    ->createOptionAction(function (Action $action){
+                        return $action
+                            ->modalHeading('Añadir Origen')
+                            ->modalWidth('sm');
+                    })
+                    ->hidden(fn (Get $get): bool => ! $get('is_external_source')),
                 Select::make('fuel_control_id')
                     ->label('Combustible')
                     ->relationship('tank', 'name')

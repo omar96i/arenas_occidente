@@ -17,6 +17,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -43,26 +44,6 @@ class FuelControlSupplyResource extends Resource
             ->schema([
                 DatePicker::make('date')
                     ->label('Fecha')
-                    ->required(),
-                Select::make('fuel_control_source_id')
-                    ->label('Origen')
-                    ->preload()
-                    ->searchable()
-                    ->relationship(name: 'origin', titleAttribute: 'name')
-                    ->native(false)
-                    ->createOptionForm([
-                        TextInput::make('name')
-                            ->label('Nombre de la fuente')
-                            ->required(),
-                    ])->columns(1)
-                    ->createOptionAction(function (Action $action){
-                        return $action
-                            ->modalHeading('Añadir Origen')
-                            ->modalWidth('sm');
-                    }),
-                Select::make('equipment_machinery_id')
-                    ->label('Equipo')
-                    ->relationship('equipment', 'name')
                     ->required(),
                 Select::make('fuel_control_id')
                     ->label('Combustible')
@@ -109,14 +90,33 @@ class FuelControlSupplyResource extends Resource
                     ->multiple()
                     ->imageEditor()
                     ->columnSpan(3),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('date')
+                    ->label('Fecha')
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('tank.name')
+                    ->label('Combustible')
+                    ->sortable(),
+                TextColumn::make('user.name')
+                    ->label('Operador')
+                    ->sortable(),
+                TextColumn::make('amount')
+                    ->label('Cantidad')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('measure')
+                    ->label('Medida')
+                    ->sortable(),
+                TextColumn::make('price')
+                    ->label('Precio')
+                    ->sortable(),
             ])
             ->filters([
                 //

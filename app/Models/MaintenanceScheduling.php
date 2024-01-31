@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,5 +39,22 @@ class MaintenanceScheduling extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function updateStatus()
+    {   
+        $today = Carbon::now();
+        $days = $today->diffInDays(Carbon::parse($this->date), false);
+        
+        if ($days < 0) {
+            $this->status = 'PASADO';
+        } elseif ($days < 7) {
+            $this->status = 'PROXIMO';
+        } else {
+            $this->status = 'BUEN ESTADO';
+        }
+
+        $this->save();
+        
     }
 }

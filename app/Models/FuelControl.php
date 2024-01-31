@@ -15,7 +15,6 @@ class FuelControl extends Model
     protected $fillable = [
         'name',
         'stock',
-        'type',
         'measure',
     ];
 

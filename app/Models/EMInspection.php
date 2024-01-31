@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -229,5 +230,66 @@ class EMInspection extends Model
     public function equipment_machinery(): BelongsTo
     {
         return $this->belongsTo(EquipmentMachinery::class, 'equipment_machinery_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {
+            // Actualizar datos del control de inspeccion
+            $extinguisher = json_decode($model->extinguisher, true);
+            $hourometer = json_decode($model->hourometer, true);
+
+            $inspection_control = EMInspectionControl::latest()
+                ->where('equipment_machinery_id', $model->equipment_machinery_id)
+                ->first();
+
+            if ($inspection_control) {
+
+                $inspection_control->extinguisher_expiration = $extinguisher['date'];
+                $inspection_control->hourometer = $hourometer['description'];
+                $inspection_control->last_report = $model->date;
+                $inspection_control->next_report = $inspection_control->last_report->copy()->addDays($inspection_control->frequency);
+
+                // estado de la ultima inspeccion
+                $daysUntilNextReport = $inspection_control->last_report->diffInDays(now());
+                if ($daysUntilNextReport < 0) {
+                    $inspection_control->status = 'PASADO';
+                } elseif ($daysUntilNextReport < 7) {
+                    $inspection_control->status = 'PROXIMO';
+                } else {
+                    $inspection_control->status = 'BUEN ESTADO';
+                }
+
+                $daysUntilExtinguisherExpiration = $inspection_control->extinguisher_expiration->diffInDays(now());
+                if ($daysUntilExtinguisherExpiration < 0) {
+                    $inspection_control->extinguisher_status = 'PASADO';
+                } elseif ($daysUntilNextReport < 7) {
+                    $inspection_control->extinguisher_status = 'PROXIMO';
+                } else {
+                    $inspection_control->extinguisher_status = 'BUEN ESTADO';
+                }
+
+                $inspection_control->save();
+            }else{
+                $new_inspection_control = new EMInspectionControl();
+                $new_inspection_control->equipment_machinery_id = $model->equipment_machinery_id;
+                $new_inspection_control->last_report = Carbon::now();
+                $new_inspection_control->actual_report = '';
+                $new_inspection_control->next_report = Carbon::now()->addDays(60);
+                $new_inspection_control->hourometer = $hourometer['description'];
+                $new_inspection_control->frequency = 60;
+                $new_inspection_control->unit = 'dias';
+                $new_inspection_control->status = 'BUEN ESTADO';
+                $new_inspection_control->extinguisher_expiration = $extinguisher['date'];;
+                $new_inspection_control->extinguisher_status = '';
+                $new_inspection_control->save();
+                $new_inspection_control->updateExtinguisherStatus();
+            }
+        });
+
+        static::updating(function ($model) {
+        });
     }
 }

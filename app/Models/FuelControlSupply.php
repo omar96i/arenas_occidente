@@ -18,8 +18,6 @@ class FuelControlSupply extends Model
 
     protected $fillable = [
         'date',
-        'fuel_control_source_id',
-        'equipment_machinery_id',
         'fuel_control_id',
         'user_id',
         'amount',
@@ -33,18 +31,8 @@ class FuelControlSupply extends Model
         return $this->belongsTo(FuelControl::class, 'fuel_control_id');
     }
 
-    public function equipment(): BelongsTo
-    {
-        return $this->belongsTo(EquipmentMachinery::class, 'equipment_machinery_id');
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function origin(): BelongsTo
-    {
-        return $this->belongsTo(FuelControlSource::class, 'fuel_control_source_id');
     }
 }

@@ -107,7 +107,7 @@ class EMInspectionControlResource extends Resource
                                 })->live(),
                             Forms\Components\DatePicker::make('actual_report')->label('Fecha actual')->default(now()->format('Y-m-d'))->disabled(),
                             Forms\Components\DatePicker::make('next_report')->label('Fecha de la proxima inspección')
-                                ->live()->disabled(),
+                                ->live()->readonly(),
                             Forms\Components\TextInput::make('hourometer')->label('Horometro o KM ultima inspección')
                                 ->numeric(),
                             Forms\Components\TextInput::make('unit')->label('Unidad')
@@ -157,18 +157,6 @@ class EMInspectionControlResource extends Resource
                             //         'false' => 'false',
                             //     ])
                             //     ->default('false'),
-                    ]),
-                Section::make('Datos adicionales')
-                    ->schema([
-                        Grid::make()
-                            ->schema([
-                                Forms\Components\TextInput::make('installed_board')->label('Plaqueta instalada eje satelital(IMEI)')
-                                    ->maxLength(191),
-                                Forms\Components\TextInput::make('installed_board_id')->label('Número de I. o seire del GPS provedor nacional')
-                                    ->maxLength(191),
-                                Forms\Components\TextInput::make('installed_board_status')->label('Estado en el runt')
-                                    ->maxLength(191),
-                            ])->columns(2),
                     ]),
 
 
