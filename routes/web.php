@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserSalaryController;
 use App\Models\EquipmentMachinery;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -21,8 +22,11 @@ use Spatie\Permission\Models\Role;
 header('Access-Control-Allow-Headers: *');
 header('Access-Control-Allow-Origin: *');
 
-Route::get('/test/{record}', function () {
-    return "hola";
+Route::get('/test', function () {
+    Mail::send('emails.send_email', [], function ($message) {
+        $message->to("omar.principal.1996@gmail.com");
+        $message->subject('¡Bienvenido a DPO Conalca!');
+    });
 })->name('test');
 
 Route::get('/test/scraping', [App\Http\Controllers\ScrapingController::class, 'index']);
