@@ -39,15 +39,15 @@ class SendNotificationMiddleware
 
             // aqui se envia la notificacion al correo----------
 
-            Mail::send('email.notifications', [
-                'documents' => $documents,
-                'inspections' => $inspections,
-                'schedules' => $schedules,
-                'extinguishers' => $extinguishers,
+            // Mail::send('email.notifications', [
+            //     'documents' => $documents,
+            //     'inspections' => $inspections,
+            //     'schedules' => $schedules,
+            //     'extinguishers' => $extinguishers,
 
-            ], function ($message) use ($recipientEmail) {
-                $message->to($recipientEmail);
-            });
+            // ], function ($message) use ($recipientEmail) {
+            //     $message->to($recipientEmail);
+            // });
 
             // --------------------------------------------------
 
@@ -106,11 +106,11 @@ class SendNotificationMiddleware
             if ($eq_soat = $equipment->soats->first()) {
                 $eq_soat->updateStatus();
             }
-        
+
             if ($eq_techno = $equipment->technos->first()) {
                 $eq_techno->updateStatus();
             }
-        
+
             if ($eq_sure = $equipment->insurance->first()) {
                 $eq_sure->updateStatus();
             }
