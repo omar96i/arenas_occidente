@@ -6,30 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Supplier extends Model
+class Consumable extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
-        'nit',
-        'address',
-        'phone',
-        'contact',
+        'stock',
     ];
 
     /**
-     * Get all of the oils for the Supplier
+     * Get all of the consumable_control for the Consumable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function oils(): HasMany
+    public function consumable_controls(): HasMany
     {
-        return $this->hasMany(OilSupplier::class);
+        return $this->hasMany(ConsumableControl::class);
     }
 
     /**
-     * Get all of the consumable_suppliers for the Supplier
+     * Get all of the consumable_suppliers for the Consumable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -37,4 +35,6 @@ class Supplier extends Model
     {
         return $this->hasMany(ConsumableSupplier::class);
     }
+
+
 }

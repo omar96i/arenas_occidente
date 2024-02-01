@@ -89,15 +89,15 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(OilControl::class, 'user_id');
     }
 
-    /**
-     * Get all of the labors for the User with position driver
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function labors(): HasMany
-    {
-        return $this->hasMany(EquipmentMachineryLabor::class, 'user_id');
-    }
+    // /**
+    //  * Get all of the labors for the User with position driver
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    //  */
+    // public function labors(): HasMany
+    // {
+    //     return $this->hasMany(EquipmentMachineryLabor::class, 'user_id');
+    // }
 
     /**
      * Get all of the maintenance_schedulings for the User
@@ -107,5 +107,15 @@ class User extends Authenticatable implements FilamentUser
     public function maintenance_schedulings(): HasMany
     {
         return $this->hasMany(MaintenanceScheduling::class);
+    }
+
+    /**
+     * Get all of the consumable_controls for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function consumable_controls(): HasMany
+    {
+        return $this->hasMany(ConsumableControl::class);
     }
 }

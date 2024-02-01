@@ -28,7 +28,7 @@ class OilSupplierResource extends Resource
 
     protected static ?string $modelLabel = 'Abastecimiento de aceites';
 
-    protected static ?string $navigationGroup = 'Administración de aceites y proveedores';
+    protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
 
     public static function form(Form $form): Form
     {
