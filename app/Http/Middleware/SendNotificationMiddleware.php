@@ -26,7 +26,7 @@ class SendNotificationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $recipientEmail = 'admin@gmail.com'; //correo al que se envia
+        $recipientEmail = "administracion@arenasdeoccidente.com"; //correo al que se envia
         $notification = Notification::where('email', $recipientEmail)->first();
 
         if (!$notification || $this->validateNotification($notification)) {
@@ -45,8 +45,8 @@ class SendNotificationMiddleware
                 'schedules' => $schedules,
                 'extinguishers' => $extinguishers,
 
-            ], function ($message) {
-                $message->to("keniier.321@gmail.com");
+            ], function ($message) use ($recipientEmail) {
+                $message->to($recipientEmail);
             });
 
             // --------------------------------------------------
