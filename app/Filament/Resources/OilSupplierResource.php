@@ -22,13 +22,20 @@ class OilSupplierResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    protected static ?string $navigationLabel = 'Abastecimiento de aceites';
+    protected static ?string $navigationLabel = 'Entrada de aceite';
 
-    protected static ?string $slug = 'abastecimiento de aceites';
+    protected static ?string $slug = 'entrada-aceite';
 
-    protected static ?string $modelLabel = 'Abastecimiento de aceites';
+    protected static ?string $modelLabel = 'Entrada de aceite';
 
     protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
 
     public static function form(Form $form): Form
     {

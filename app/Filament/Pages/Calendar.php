@@ -26,4 +26,12 @@ class Calendar extends Page
 
     protected static ?string $navigationGroup = 'Administracion de turnos y contratos';
 
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
 }

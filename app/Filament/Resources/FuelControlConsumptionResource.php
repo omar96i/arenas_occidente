@@ -38,6 +38,13 @@ class FuelControlConsumptionResource extends Resource
 
     protected static ?int $navigationSort = 0;
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion', 'operario', 'supervisores'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -93,12 +100,12 @@ class FuelControlConsumptionResource extends Resource
                         fn (Get $get, $livewire): Closure => function (string $attribute, $value, Closure $fail) use ($get, $livewire) {
                             $fuelControlId = $get('fuel_control_id');
                             $fuelControl = FuelControl::find($fuelControlId);
-                
+
                             if (!$fuelControl) {
                                 $fail("No se encontró el control de combustible con ID proporcionado.");
                                 return;
                             }
-                
+
                             if ($value > $fuelControl->stock) {
                                 $fail("La cantidad supera la disponible en la fuente.");
                             }
@@ -159,14 +166,14 @@ class FuelControlConsumptionResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -174,5 +181,5 @@ class FuelControlConsumptionResource extends Resource
             'create' => Pages\CreateFuelControlConsumption::route('/create'),
             'edit' => Pages\EditFuelControlConsumption::route('/{record}/edit'),
         ];
-    }    
+    }
 }

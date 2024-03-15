@@ -28,6 +28,13 @@ class OilResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

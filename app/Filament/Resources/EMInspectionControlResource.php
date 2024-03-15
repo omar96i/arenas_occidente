@@ -34,6 +34,13 @@ class EMInspectionControlResource extends Resource
 
     protected static ?int $navigationSort = 9;
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

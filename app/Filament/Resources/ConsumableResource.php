@@ -27,6 +27,13 @@ class ConsumableResource extends Resource
 
     protected static ?string $modelLabel = 'consumibles';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -28,15 +28,22 @@ class FuelControlSupplyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-circle';
 
-    protected static ?string $navigationLabel = 'Abastecimiento de Combustible';
+    protected static ?string $navigationLabel = 'Entrada de combustible';
 
-    protected static ?string $slug = 'abastecimiento-combustibles';
+    protected static ?string $slug = 'entrada-combustibles';
 
-    protected static ?string $modelLabel = 'Abastecimiento de Combustible';
+    protected static ?string $modelLabel = 'Entrada de combustible';
 
     protected static ?string $navigationGroup = 'Administración de Combustibles';
 
     protected static ?int $navigationSort = 0;
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
 
     public static function form(Form $form): Form
     {
@@ -58,27 +65,11 @@ class FuelControlSupplyResource extends Resource
                     ->required()
                     ->numeric()
                     ->required()
-                    ->default(0)
-                    ->rules([
-                        'required',
-                        fn (Get $get, $livewire): Closure => function (string $attribute, $value, Closure $fail) use ($get, $livewire) {
-                            $fuelControlId = $get('fuel_control_id');
-                            $fuelControl = FuelControl::find($fuelControlId);
-                
-                            if (!$fuelControl) {
-                                $fail("No se encontró el control de combustible con ID proporcionado.");
-                                return;
-                            }
-                
-                            if ($value > $fuelControl->stock) {
-                                $fail("La cantidad supera la disponible en la fuente.");
-                            }
-                        },
-                    ]),
+                    ->default(0),
                 Select::make('measure')
                     ->label('Medida')
                     ->required()
-                    ->options(['GALONES' => 'GALONES', 'LITROS' => 'LITROS'])
+                    ->options(['GALONES' => 'GALONES'])
                     ->default('GALONES'),
                 TextInput::make('price')
                     ->label('Precio')
@@ -130,14 +121,14 @@ class FuelControlSupplyResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -145,5 +136,5 @@ class FuelControlSupplyResource extends Resource
             'create' => Pages\CreateFuelControlSupply::route('/create'),
             'edit' => Pages\EditFuelControlSupply::route('/{record}/edit'),
         ];
-    }    
+    }
 }

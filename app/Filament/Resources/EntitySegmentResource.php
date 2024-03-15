@@ -31,6 +31,13 @@ class EntitySegmentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Areas';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

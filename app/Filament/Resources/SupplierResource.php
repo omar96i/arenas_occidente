@@ -27,6 +27,13 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -46,6 +53,12 @@ class SupplierResource extends Resource
                 Forms\Components\TextInput::make('contact')->label('Contacto asesor')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\TextInput::make('bank')->label('Nombre del banco')
+                    ->required()
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('number_bank')->label('Numero de cuenta')
+                    ->required()
+                    ->maxLength(191),
             ]);
     }
 
@@ -62,6 +75,10 @@ class SupplierResource extends Resource
                 Tables\Columns\TextColumn::make('phone')->label('Teléfono')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact')->label('Contacto asesor')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('bank')->label('Banco')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('number_bank')->label('Numero de cuenta')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')
                     ->dateTime()

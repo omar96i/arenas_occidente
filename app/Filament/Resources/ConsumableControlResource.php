@@ -21,11 +21,18 @@ class ConsumableControlResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
 
-    protected static ?string $navigationLabel = 'Control de consumibles';
+    protected static ?string $navigationLabel = 'Salida de combustible';
 
-    protected static ?string $slug = 'control-de-consumibles';
+    protected static ?string $slug = 'salida-combustible';
 
-    protected static ?string $modelLabel = 'Control de consumibles';
+    protected static ?string $modelLabel = 'Salida de combustible';
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion', 'operario', 'supervisores'];
+        return in_array($user->position, $allowedRoles);
+    }
 
     public static function form(Form $form): Form
     {

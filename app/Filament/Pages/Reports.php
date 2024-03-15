@@ -21,8 +21,16 @@ class Reports extends Page
 
     protected static ?string $navigationGroup = 'Reportes';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public $entities;
     public $segments;
+
 
     public function mount(Request $request){
         $this->entities = Entity::all();

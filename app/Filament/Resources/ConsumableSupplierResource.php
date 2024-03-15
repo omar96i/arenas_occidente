@@ -21,11 +21,18 @@ class ConsumableSupplierResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración de consumibles y proveedores';
 
-    protected static ?string $navigationLabel = 'Abastecimento de consumibles';
+    protected static ?string $navigationLabel = 'Entrada de consumibles';
 
     protected static ?string $slug = 'abastecimiento-de-consumibles';
 
-    protected static ?string $modelLabel = 'Abastecimento de consumibles';
+    protected static ?string $modelLabel = 'Entrada de consumibles';
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
 
     public static function form(Form $form): Form
     {

@@ -42,6 +42,13 @@ class EMInspectionResource extends Resource
 
     protected static ?int $navigationSort = 10;
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -1211,28 +1218,6 @@ class EMInspectionResource extends Resource
                                             return 'Luces cabina - Horometro - Completo';
                                         }
                                         return 'Luces cabina - Horometro';
-                                    }),
-
-                                Repeater::make('lc_relog_oil_pressure')->label('')->collapsed()
-                                    ->schema([
-                                        Radio::make('checkbox')->label('Selecciona una opción')->required()->live()
-                                            ->options([
-                                                'SI' => 'SI',
-                                                'NO' => 'NO',
-                                            ])->columns(2),
-                                        Textarea::make('description')->label('Descripcion'),
-                                        FileUpload::make('image')->label('Evidencia')->image()->maxSize(3500)->minSize(512),
-                                    ])
-                                    ->columns(1)
-                                    ->addable(false)
-                                    ->deletable(false)
-                                    ->reorderable(false)
-                                    ->collapsible()
-                                    ->itemLabel(function(array $state){
-                                        if($state['checkbox']){
-                                            return 'Luces cabina - Reloj presion de aceite - Completo';
-                                        }
-                                        return 'Luces cabina - Reloj presion de aceite';
                                     }),
 
                                 Repeater::make('lc_relog_oil_pressure')->label('')->collapsed()

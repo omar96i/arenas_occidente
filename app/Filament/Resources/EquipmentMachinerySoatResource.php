@@ -5,8 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EquipmentMachinerySoatResource\Pages;
 use App\Filament\Resources\EquipmentMachinerySoatResource\RelationManagers;
 use App\Models\EquipmentMachinerySoat;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,6 +32,13 @@ class EquipmentMachinerySoatResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -43,13 +53,30 @@ class EquipmentMachinerySoatResource extends Resource
                     ->required()
                     ->maxLength(191),
                 Forms\Components\DatePicker::make('validity')->label('Vigencia')
-                    ->required(),
+                    ->required()
+                    ->afterStateUpdated(function (Set $set, Get $get, $state){
+                        $last_report = Carbon::parse($state);
+                        $today = date_create(date("Y-m-d"));
+                        $expiration_date = date_create($last_report);
+                        $interval = date_diff($today, $expiration_date);
+                        $days = $interval->format('%R%a');
+                        if($days < 0) {
+                            $set('status', 'PASADO');
+                        } elseif($days >= 0 && $days < 30) {
+                            $set('status', 'PROXIMO');
+                        } else {
+                            $set('status', 'BUEN ESTADO');
+                        }
+                    })
+                    ->live(),
                 Forms\Components\FileUpload::make('file')->label('Subir evidencia'),
                 Forms\Components\Select::make('status')->label('Estado')
                     ->required()
+                    ->live()
                     ->options([
-                        'Vigente' => 'Vigente',
-                        'Expirado' => 'Expirado',
+                        'PASADO' => 'PASADO',
+                        'PROXIMO' => 'PROXIMO',
+                        'BUEN ESTADO' => 'BUEN ESTADO',
                     ]),
             ]);
     }
@@ -72,6 +99,7 @@ class EquipmentMachinerySoatResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')->label('Estado')
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')
                     ->dateTime()

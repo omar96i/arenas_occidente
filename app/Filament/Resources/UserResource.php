@@ -36,6 +36,13 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Administracion de usuarios';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -74,6 +81,7 @@ class UserResource extends Resource
                         'conductor' => 'Conductor',
                         'operario' => 'Operario',
                         'administracion' => 'Administración',
+                        'supervisores' => 'Supervisores'
                     ])
                     ->required(),
             ])->columns(1);

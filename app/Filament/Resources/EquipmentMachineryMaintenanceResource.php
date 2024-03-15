@@ -7,6 +7,7 @@ use App\Filament\Resources\EquipmentMachineryMaintenanceResource\RelationManager
 use App\Models\EquipmentMachinery;
 use App\Models\EquipmentMachineryMaintenance;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -16,6 +17,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -37,6 +39,13 @@ class EquipmentMachineryMaintenanceResource extends Resource
     protected static ?string $modelLabel = 'Mantenimiento';
 
     protected static ?string $navigationGroup = 'Administración de maquinaria y equipos';
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        $allowedRoles = ['administracion'];
+        return in_array($user->position, $allowedRoles);
+    }
 
     public static function form(Form $form): Form
     {
@@ -72,7 +81,7 @@ class EquipmentMachineryMaintenanceResource extends Resource
                             ->options(EquipmentMachinery::all()->pluck('name', 'id'))
                             ->searchable(),
                         TextInput::make('code')
-                            ->label('Cod')
+                            ->label('Centro de costos')
                             ->required(),
                         Select::make('maintenance_type')
                             ->label('Tipo de mantenimiento')
@@ -110,6 +119,7 @@ class EquipmentMachineryMaintenanceResource extends Resource
                             ->image()
                             ->multiple()
                             ->imageEditor()
+                            ->required()
                             ->columnSpan(3),
                 ])->columns(3),
                 Section::make('DESCRIPCIÓN DE MANTENIMIENTO PREVENTIVO')
@@ -121,10 +131,10 @@ class EquipmentMachineryMaintenanceResource extends Resource
                                 ->label('Actividad')
                                 ->required()
                                 ->readOnly(),
-                            TextInput::make('cod')
-                                ->label('Cod'),
-                            TextInput::make('cant')
-                                ->label('Cant'),
+                            Checkbox::make('is_admin')->inline(false)
+                                ->label('Cod')->live(),
+                            TextInput::make('cant')->required()
+                                ->label('Cant')->hidden(fn (Get $get): bool => ! $get('is_admin')),
                         ])
                         ->addable(false)
                         ->deletable(false)
