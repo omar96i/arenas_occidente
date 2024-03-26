@@ -11,11 +11,4 @@ class CreateFuelControlSupply extends CreateRecord
 {
     protected static string $resource = FuelControlSupplyResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        $fuel_control = FuelControl::find($data['fuel_control_id']);
-        $fuel_control->stock += $data['amount'];
-        $fuel_control->save();
-        return $data;
-    }
 }

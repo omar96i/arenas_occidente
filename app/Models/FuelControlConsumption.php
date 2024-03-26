@@ -54,7 +54,7 @@ class FuelControlConsumption extends Model
     {
         parent::boot();
 
-        static::saved(function ($model) {
+        static::creating(function ($model) {
             if ($model->is_external_source) {
                 // registro de abastecimiento si es de fuente externa
                 $fuel_control_supply = new FuelControlSupply;
@@ -67,22 +67,28 @@ class FuelControlConsumption extends Model
                     'price' => $model->price,
                 ]);
                 $fuel_control_supply->save();
-            }else{
+
+            } else {
+
+                if ($model->measure == 'LITROS') {
+                    $temp_amount = $model->convertLitersToGallons($model->amount);
+                }
                 // resta de control de combustible
                 $fuel_control = FuelControl::find($model->fuel_control_id);
-                $fuel_control->stock -= $model->amount;
+                $fuel_control->stock -= $temp_amount;
                 $fuel_control->save();
+
             }
         });
 
         static::updating(function ($model) {
             if ($model->is_external_source) {
-                // Actualización de registro de abastecimiento si es de fuente externa
+
                 $fuel_control_supply = FuelControlSupply::where('fuel_control_id', $model->fuel_control_id)
                     ->where('date', $model->date)
                     ->where('user_id', $model->user_id)
                     ->first();
-        
+
                 if ($fuel_control_supply) {
                     $fuel_control_supply->update([
                         'amount' => $model->amount,
@@ -90,16 +96,63 @@ class FuelControlConsumption extends Model
                         'price' => $model->price,
                     ]);
                 }
+
             } else {
-                // Actualización de resta de control de combustible
                 $fuel_control = FuelControl::find($model->fuel_control_id);
-        
                 if ($fuel_control) {
-                    $fuel_control->stock += $model->getOriginal('amount'); // Restaurar el valor original
-                    $fuel_control->stock -= $model->amount;
+
+                    $original_amount = $model->getOriginal('amount');
+                    $original_measure = $model->getOriginal('measure');
+                    $new_amount = $model->amount;
+                    $new_measure = $model->measure;
+                
+                    if ($original_measure == 'LITROS') {
+                        $fuel_control->stock += $model->convertLitersToGallons($original_amount);
+                    } else {
+                        $fuel_control->stock += $original_amount;
+                    }
+                
+                    if ($new_measure == 'LITROS') {
+                        $fuel_control->stock -= $model->convertLitersToGallons($new_amount);
+                    } else {
+                        $fuel_control->stock -= $new_amount;
+                    }
+                
+                    $fuel_control->save();
+
+                }
+                
+            }
+        });
+
+        static::deleting(function ($model) {
+            if ($model->is_external_source) {
+                $fuel_control_supply = FuelControlSupply::where('fuel_control_id', $model->fuel_control_id)
+                    ->where('date', $model->date)
+                    ->where('user_id', $model->user_id)
+                    ->first();
+
+                if ($fuel_control_supply) {
+                    $fuel_control_supply->delete();
+                }
+            } else {
+                if ($model->measure == 'LITROS') {
+                    $temp_amount = $model->convertLitersToGallons($model->amount);
+                }
+
+                $fuel_control = FuelControl::find($model->fuel_control_id);
+                if ($fuel_control) {
+                    $fuel_control->stock += $temp_amount;
                     $fuel_control->save();
                 }
             }
         });
+    }
+
+    public function convertLitersToGallons($liters)
+    {
+        $gallons = 3.785;
+        $gallons = $liters / $gallons;
+        return $gallons;
     }
 }

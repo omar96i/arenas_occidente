@@ -99,15 +99,17 @@ class FuelControlConsumptionResource extends Resource
                         'required',
                         fn (Get $get, $livewire): Closure => function (string $attribute, $value, Closure $fail) use ($get, $livewire) {
                             $fuelControlId = $get('fuel_control_id');
+                            $measure = $get('measure');
                             $fuelControl = FuelControl::find($fuelControlId);
 
                             if (!$fuelControl) {
-                                $fail("No se encontró el control de combustible con ID proporcionado.");
-                                return;
+                                return $fail("No se encontró el control de combustible con el ID proporcionado.");
                             }
-
-                            if ($value > $fuelControl->stock) {
-                                $fail("La cantidad supera la disponible en la fuente.");
+                            
+                            $temp_value = ($measure == 'LITROS') ? ($value / 3.785) : $value;
+                            
+                            if ($temp_value > $fuelControl->stock) {
+                                return $fail("La cantidad supera la disponible en la fuente.");
                             }
                         },
                     ]),
@@ -159,6 +161,7 @@ class FuelControlConsumptionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

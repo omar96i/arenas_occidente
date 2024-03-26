@@ -69,7 +69,7 @@ class FuelControlSupplyResource extends Resource
                 Select::make('measure')
                     ->label('Medida')
                     ->required()
-                    ->options(['GALONES' => 'GALONES'])
+                    ->options(['GALONES' => 'GALONES', 'LITROS' => 'LITROS'])
                     ->default('GALONES'),
                 TextInput::make('price')
                     ->label('Precio')
@@ -114,6 +114,7 @@ class FuelControlSupplyResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
