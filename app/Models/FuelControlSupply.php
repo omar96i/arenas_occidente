@@ -44,6 +44,8 @@ class FuelControlSupply extends Model
 
             if ($model->measure == 'LITROS') {
                 $temp_amount = $model->convertLitersToGallons($model->amount);
+            }else{
+                $temp_amount = $model->amount;
             }
             // suma de control de combustible
             $fuel_control = FuelControl::find($model->fuel_control_id);
@@ -83,6 +85,8 @@ class FuelControlSupply extends Model
 
             if ($model->measure == 'LITROS') {
                 $temp_amount = $model->convertLitersToGallons($model->amount);
+            }else{
+                $temp_amount = $model->amount;
             }
 
             $fuel_control = FuelControl::find($model->fuel_control_id);

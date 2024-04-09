@@ -100,13 +100,15 @@ class OilControlResource extends Resource
                                 '0.75' => '3/4',
                             ])
                             ->afterStateUpdated(function (Get $get, Set $set, $state){
+                                $number2 =  $get('input1');
                                 if ($state) {
-                                    $number2 = $get('input1');
                                     if($number2){
                                         $set('amount', floatval($state)+floatval($number2));
                                     }else{
                                         $set('amount', floatval($state));
                                     }
+                                }else{
+                                    $set('amount', 0 + floatval($number2));
                                 }
                             }),
                         Forms\Components\TextInput::make('amount')->label('Cantidad Total')
@@ -152,7 +154,8 @@ class OilControlResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array

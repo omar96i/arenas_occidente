@@ -53,7 +53,7 @@ class OilControl extends Model
     {
         parent::boot();
 
-        static::saved(function ($model) {
+        static::creating(function ($model) {
             // Incrementar el stock al crear un registro de control
             $amount = $model->amount;
             $oil = Oil::where('id', $model->oil_id)->first();

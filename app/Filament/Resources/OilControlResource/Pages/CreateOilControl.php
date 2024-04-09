@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateOilControl extends CreateRecord
 {
     protected static string $resource = OilControlResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
